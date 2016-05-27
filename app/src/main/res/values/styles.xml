@@ -1,0 +1,67 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Base application theme. -->
+    <style name="AppTheme"
+        parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="TransparentText">
+        <item name="android:textColor">#00000000</item>
+    </style>
+
+    <style name="FirstTheme" parent="Theme.AppCompat">
+
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@mipmap/first_backpng</item>
+
+    </style>
+
+    <style name="widget_week_icon">
+        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_height">38dp</item>
+        <item name="android:src">@mipmap/type_one_cloudy</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
+    <style name="widget_week_temp_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">20dp</item>
+        <item name="android:text">@string/ellipsis</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:shadowColor">@color/colorTextGrey</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="widget_week_week_text">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="android:text">@string/ellipsis</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:shadowColor">@color/colorTextGrey</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="widget_button">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">#00000000</item>
+        <item name="android:elevation" tools:targetApi="lollipop">20dp</item>
+    </style>
+
+
+</resources>

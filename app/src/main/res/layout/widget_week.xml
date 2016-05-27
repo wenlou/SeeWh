@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/widget_week"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:clickable="true"
+    android:padding="0dp" >
+
+
+    <RelativeLayout
+        android:layout_centerInParent="true"
+        android:layout_width="wrap_content"
+        android:elevation="5dp"
+        android:layout_height="80dp"
+        tools:targetApi="lollipop">
+
+        <LinearLayout
+            android:layout_alignParentTop="true"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_centerInParent="true"
+            android:padding="4dp"
+            tools:ignore="DisableBaselineAlignment,UselessParent">
+
+            <RelativeLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="17dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_week_1"
+                            style="@style/widget_week_week_text"
+                            android:text="等待更新"/>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp" >
+
+                        <ImageView
+                            android:id="@+id/widget_week_image_1"
+                            style="@style/widget_week_icon"
+                            tools:ignore="ContentDescription" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_temp_1"
+                            style="@style/widget_week_temp_text" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="17dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_week_2"
+                            style="@style/widget_week_week_text" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp" >
+
+                        <ImageView
+                            android:id="@+id/widget_week_image_2"
+                            style="@style/widget_week_icon"
+                            tools:ignore="ContentDescription" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_temp_2"
+                            style="@style/widget_week_temp_text" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="17dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_week_3"
+                            style="@style/widget_week_week_text" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp" >
+
+                        <ImageView
+                            android:id="@+id/widget_week_image_3"
+                            style="@style/widget_week_icon"
+                            tools:ignore="ContentDescription" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_temp_3"
+                            style="@style/widget_week_temp_text" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="17dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_week_4"
+                            style="@style/widget_week_week_text" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp" >
+
+                        <ImageView
+                            android:id="@+id/widget_week_image_4"
+                            style="@style/widget_week_icon"
+                            tools:ignore="ContentDescription" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_temp_4"
+                            style="@style/widget_week_temp_text" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_height="match_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:orientation="vertical" >
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="17dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_week_5"
+                            style="@style/widget_week_week_text" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="38dp" >
+
+                        <ImageView
+                            android:id="@+id/widget_week_image_5"
+                            style="@style/widget_week_icon"
+                            tools:ignore="ContentDescription" />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="37dp" >
+
+                        <TextView
+                            android:id="@+id/widget_week_temp_5"
+                            style="@style/widget_week_temp_text" />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+    <ImageButton
+        android:id="@+id/widget_week_button"
+        style="@style/widget_button"
+        tools:ignore="ContentDescription" />
+
+
+
+</RelativeLayout>

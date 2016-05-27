@@ -1,0 +1,147 @@
+<resources>
+    <string name="app_name">看看天气</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="no_network">网络不好(˵¯͒⌢͗¯͒˵)</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="headerTxt">看看天气</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="api_error">出了点小问题，别担心，( •̀ .̫ •́ )✧</string>
+
+
+    <string name="chage_icon">更换图标</string>
+    <string-array name="icons">
+        <item>图标一</item>
+        <item>图标二</item>
+    </string-array>
+
+    <string-array name="cache_time">
+        <item>禁止刷新</item>
+        <item>每1小时</item>
+        <item>每3小时</item>
+        <item>每6小时</item>
+    </string-array>
+
+    <string name="ellipsis">…</string>
+
+    <string name="widget">小部件</string>
+
+
+    <string name="widget_time_title">小部件刷新频率</string>
+    <string name="widget_time_summary">设置小部件的刷新频率</string>
+    <string-array
+        name="widget_time_list">
+        <item>1小时</item>
+        <item>2小时</item>
+        <item>3小时</item>
+        <item>4小时</item>
+    </string-array>
+    <string-array
+        name="widget_time_key">
+        <item>1hour</item>
+        <item>2hours</item>
+        <item>3hours</item>
+        <item>4hours</item>
+    </string-array>
+    <string name="widget_time_default">2hours</string>
+
+    <string name="key_widget_time">widget_time</string>
+
+    <string name="refresh_widget_error">刷新小部件失败，请检查网络环境</string>
+
+    <!-- week -->
+    <string name="yesterday">昨日</string>
+    <string name="today">今日</string>
+    <string name="week">周</string>
+    <string name="week_1">周一</string>
+    <string name="week_2">周二</string>
+    <string name="week_3">周三</string>
+    <string name="week_4">周四</string>
+    <string name="week_5">周五</string>
+    <string name="week_6">周六</string>
+    <string name="week_7">周日</string>
+
+    <!-- keyword -->
+    <string name="local">本地</string>
+    <string name="live">实时</string>
+    <string name="refresh_at">更新于</string>
+    <string name="week_weather">天气概览</string>
+    <string name="life_details">生活信息</string>
+    <string name="pm_25">PM2.5</string>
+    <string name="pm_10">PM10</string>
+    <string name="pm_level">颗粒物等级</string>
+    <string name="humidity">湿度</string>
+    <string name="uv">紫外线</string>
+    <string name="dressing_index">穿衣指数</string>
+    <string name="cold_index">感冒指数</string>
+    <string name="air_index">污染指数</string>
+    <string name="wash_car_index">洗车指数</string>
+    <string name="exercise_index">运动指数</string>
+    <string name="visibility">能见度</string>
+    <string name="sun_rise">日出</string>
+    <string name="sun_fall">日落</string>
+    <string name="apparent_temp">体感温度</string>
+    <string name="maxi_temp">高温</string>
+    <string name="mini_temp">低温</string>
+    <string name="temp">温度</string>
+    <string name="pop">降水概率</string>
+    <string name="yesterday_data">昨日气温</string>
+    <string name="time">时间</string>
+
+    <!--share preference-->
+    <string name="sp_widget_day_setting">widget_day_setting</string>
+    <string name="sp_widget_week_setting">widget_week_setting</string>
+    <string name="sp_widget_day_week_setting">widget_day_week_setting</string>
+    <string name="sp_widget_clock_day_setting">widget_clock_day_setting</string>
+    <string name="sp_widget_clock_day_center_setting">widget_clock_day_center_setting</string>
+    <string name="sp_widget_clock_day_week_setting">widget_clock_day_week_setting</string>
+    <string name="key_enable">enable</string>
+    <string name="key_location">location</string>
+    <string name="key_show_card">showCard</string>
+    <string name="key_hide_refresh_time">show_refresh_time</string>
+    <string name="key_black_text">black_text</string>
+    <string name="key_isDay">isDay</string>
+    <string name="key_saved_data">saved_data</string>
+    <string name="key_weather_kind_today">weather_kind_today</string>
+    <string name="key_weather_today">weather_today</string>
+    <string name="key_temperature_today">temperature_today</string>
+    <string name="key_city_time">city_time</string>
+    <string name="key_week_2">week_2</string>
+    <string name="key_week_3">week_3</string>
+    <string name="key_week_4">week_4</string>
+    <string name="key_week_5">week_5</string>
+    <string name="key_weather_2">weather_2</string>
+    <string name="key_weather_3">weather_3</string>
+    <string name="key_weather_4">weather_4</string>
+    <string name="key_weather_5">weather_5</string>
+    <string name="key_temperature_2">temperature_2</string>
+    <string name="key_temperature_3">temperature_3</string>
+    <string name="key_temperature_4">temperature_4</string>
+    <string name="key_temperature_5">temperature_5</string>
+
+    <string name="key_watched_introduce">watched_introduce</string>
+    <string name="key_shared">shared</string>
+    <string name="key_share_uri">share_uri</string>
+    <string name="key_introduce_version_code">introduce_version_code</string>
+    <string name="key_hide_star">hide_star</string>
+    <string name="key_navigation_bar_color_switch">navigation_bar_color_switch</string>
+    <string name="key_get_hourly_data_by_eng">get_hourly_data_by_eng</string>
+    <string name="key_timing_forecast_switch_today">timing_forecast_switch_today</string>
+    <string name="key_forecast_time_today">forecast_time_today</string>
+    <string name="key_forecast_type_today">forecast_type_today</string>
+    <string name="key_timing_forecast_switch_tomorrow">timing_forecast_switch_tomorrow</string>
+    <string name="key_forecast_time_tomorrow">forecast_time_tomorrow</string>
+    <string name="key_forecast_type_tomorrow">forecast_type_tomorrow</string>
+    <string name="key_notification_switch">notification_switch</string>
+    <string name="key_notification_text_color">notification_text_color</string>
+    <string name="key_notification_background_color_switch">notification_background_color_switch</string>
+    <string name="key_notification_auto_refresh_switch">notification_auto_refresh_switch</string>
+    <string name="key_notification_can_clear_switch">notification_can_clear_switch</string>
+    <string name="key_hide_notification_in_lockScreen">hide_notification_in_lockScreen</string>
+    <string name="key_notification_time">notification_time</string>
+    <string name="key_notification_sound_switch">notification_sound_switch</string>
+    <string name="key_notification_shock_switch">notification_shock_switch</string>
+
+</resources>
