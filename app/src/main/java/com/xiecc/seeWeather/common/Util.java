@@ -113,4 +113,22 @@ public class Util {
 
        public void onSuccess();
     }
+    /**
+     * 天气代码 100 为晴 101-213 500-901 为阴 300-406为雨
+     *
+     * @param code 天气代码
+     * @return 天气情况
+     */
+    public static String getWeatherType(int code) {
+        if (code == 100) {
+            return "晴";
+        }
+        if ((code >= 101 && code <= 213) || (code >= 500 && code <= 901)) {
+            return "阴";
+        }
+        if (code >= 300 && code <= 406) {
+            return "雨";
+        }
+        return "错误";
+    }
 }

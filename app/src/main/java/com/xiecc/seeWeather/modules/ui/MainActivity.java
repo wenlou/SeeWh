@@ -8,6 +8,8 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
@@ -19,18 +21,22 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
+import android.widget.TextView;
 
 import com.amap.api.location.AMapLocation;
 import com.amap.api.location.AMapLocationClient;
@@ -38,6 +44,8 @@ import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
@@ -297,6 +305,52 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 collapsingToolbarLayout.setTitle(weather.basic.city);
                 mAdapter = new WeatherAdapter(MainActivity.this, weather);
                 mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnItemClickLitener(new WeatherAdapter.OnItemClickLitener(){
+
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        View dialogLayout = inflater.inflate(R.layout.weather_dialog, (ViewGroup) MainActivity.this.findViewById(
+                                R.id.weather_dialog_root));
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
+                                .setView(dialogLayout);
+                        final AlertDialog alertDialog = builder.create();
+
+                        RelativeLayout root = (RelativeLayout) dialogLayout.findViewById(R.id.weather_dialog_root);
+                        switch (Util.getWeatherType(Integer.parseInt(weather.now.cond.code))) {
+                            case "晴":
+                                root.setBackgroundResource(R.mipmap.dialog_bg_sunny);
+                                break;
+                            case "阴":
+                                root.setBackgroundResource(R.mipmap.dialog_bg_cloudy);
+                                break;
+                            case "雨":
+                                root.setBackgroundResource(R.mipmap.dialog_bg_rainy);
+                                break;
+                            default:
+                                break;
+                        }
+
+                        TextView city = (TextView) dialogLayout.findViewById(R.id.dialog_city);
+                        city.setText(weather.basic.city);
+                        TextView temp = (TextView) dialogLayout.findViewById(R.id.dialog_temp);
+                        temp.setText(String.format("%s°", weather.now.tmp));
+                        ImageView icon = (ImageView) dialogLayout.findViewById(R.id.dialog_icon);
+
+                        Glide.with(MainActivity.this)
+                                .load(mSetting.getInt(weather.now.cond.txt, R.mipmap.none))
+                                .asBitmap()
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                                        icon.setImageBitmap(resource);
+                                        icon.setColorFilter(Color.WHITE);
+                                    }
+                                });
+
+                        alertDialog.show();
+                    }
+                } );
                 normalStyleNotification(weather);
                 startUpdataService(weather);
                 showSnackbar(fab, "加载完毕，✺◟(∗❛ัᴗ❛ั∗)◞✺,");

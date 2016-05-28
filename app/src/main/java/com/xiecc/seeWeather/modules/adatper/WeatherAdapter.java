@@ -79,8 +79,15 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-
+    public void onBindViewHolder( final RecyclerView.ViewHolder holder, int position) {
+        if(mOnItemClickLitener!=null){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mOnItemClickLitener.onItemClick(holder.itemView,position);
+                }
+            });
+        }
 
         if (holder instanceof NowWeatherViewHolder) {
             try {
@@ -202,6 +209,8 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView tempPm;
         private TextView tempQuality;
 
+
+
         public NowWeatherViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cardView);
@@ -296,5 +305,17 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private void  showWeatherDialog(){
 
 
+    }
+
+    public interface OnItemClickLitener
+    {
+        void onItemClick(View view,int position);
+    }
+
+    private OnItemClickLitener mOnItemClickLitener;
+
+    public void setOnItemClickLitener(OnItemClickLitener mOnItemClickLitener)
+    {
+        this.mOnItemClickLitener = mOnItemClickLitener;
     }
 }

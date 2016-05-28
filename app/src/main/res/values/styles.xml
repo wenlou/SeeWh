@@ -63,5 +63,12 @@
         <item name="android:elevation" tools:targetApi="lollipop">20dp</item>
     </style>
 
+    <style name="text_shadow">
+        <item name="android:shadowColor">@android:color/darker_gray</item>
+        <item name="android:shadowDx">0</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
 
 </resources>
