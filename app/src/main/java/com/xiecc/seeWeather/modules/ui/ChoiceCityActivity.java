@@ -121,6 +121,7 @@ public class ChoiceCityActivity extends BaseActivity {
                 selectedCity = cityList.get(pos);
                 Intent intent = new Intent();
                 String cityName = selectedCity.CityName;
+                //传送数据
                 intent.putExtra(Setting.CITY_NAME, cityName);
                 setResult(2, intent);
                 finish();
