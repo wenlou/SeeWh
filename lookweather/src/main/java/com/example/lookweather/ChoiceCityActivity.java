@@ -46,7 +46,13 @@ public class ChoiceCityActivity extends BaseActivity {
     private List<City> cityList;
     private CityAdapter mAdapter;
 
+    /**
+     * The constant LEVEL_PROVINCE.
+     */
     public static final int LEVEL_PROVINCE = 1;
+    /**
+     * The constant LEVEL_CITY.
+     */
     public static final int LEVEL_CITY = 2;
     private int currentLevel;
 

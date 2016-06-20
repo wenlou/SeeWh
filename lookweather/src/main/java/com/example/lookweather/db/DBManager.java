@@ -19,29 +19,56 @@ import java.io.InputStream;
 public class DBManager {
     private static String TAG = DBManager.class.getSimpleName();
     private final int BUFFER_SIZE = 400000;
+    /**
+     * The constant DB_NAME.
+     */
     public static final String DB_NAME = "china_city.db"; //数据库名字
+    /**
+     * The constant PACKAGE_NAME.
+     */
     public static final String PACKAGE_NAME = "com.example.lookweather";
+    /**
+     * The constant DB_PATH.
+     */
     public static final String DB_PATH = "/data" + Environment.getDataDirectory().getAbsolutePath() + "/" +
             PACKAGE_NAME;  //在手机里存放数据库的位置(/data/data/com.example.lookweather/china_city.db)
     private SQLiteDatabase database;
     private Context context;
 
 
+    /**
+     * Instantiates a new Db manager.
+     *
+     * @param context the context
+     */
     public DBManager(Context context) {
         this.context = context;
     }
 
 
+    /**
+     * Gets database.
+     *
+     * @return the database
+     */
     public SQLiteDatabase getDatabase() {
         return database;
     }
 
 
+    /**
+     * Sets database.
+     *
+     * @param database the database
+     */
     public void setDatabase(SQLiteDatabase database) {
         this.database = database;
     }
 
 
+    /**
+     * Open database.
+     */
     public void openDatabase() {
         Log.e(TAG, DB_PATH + "/" + DB_NAME);
         this.database = this.openDatabase(DB_PATH + "/" + DB_NAME);
@@ -76,6 +103,9 @@ public class DBManager {
     }
 
 
+    /**
+     * Close database.
+     */
     public void closeDatabase() {
         this.database.close();
     }

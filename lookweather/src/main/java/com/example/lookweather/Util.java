@@ -14,8 +14,9 @@ public class Util {
 
     /**
      * 只关注是否联网
-     * @param context
-     * @return
+     *
+     * @param context the context
+     * @return boolean
      */
     public static boolean isNetworkConnected(Context context) {
         if (context != null) {
@@ -33,6 +34,7 @@ public class Util {
      *
      * @param pTime 修要判断的时间
      * @return dayForWeek 判断结果
+     * @throws Exception the exception
      * @Exception 发生异常
      */
     public static String dayForWeek(String pTime) throws Exception {
@@ -68,12 +70,23 @@ public class Util {
         return week;
     }
 
+    /**
+     * Get tset.
+     *
+     * @param listener the listener
+     */
     public static void getTset(Util.listener listener){
 
     }
 
+    /**
+     * The interface Listener.
+     */
     public interface listener{
 
-       public void onSuccess();
+        /**
+         * On success.
+         */
+        public void onSuccess();
     }
 }

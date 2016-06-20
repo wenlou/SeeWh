@@ -30,7 +30,13 @@ public abstract class HidingScrollListener extends RecyclerView.OnScrollListener
     }
 
 
+    /**
+     * On hide.
+     */
     public abstract void onHide();
 
+    /**
+     * On show.
+     */
     public abstract void onShow();
 }

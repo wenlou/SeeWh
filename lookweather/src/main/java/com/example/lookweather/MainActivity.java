@@ -49,7 +49,9 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 
-
+/**
+ * The type Main activity.
+ */
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
         AMapLocationListener {
     private final String TAG = MainActivity.class.getSimpleName();
@@ -71,8 +73,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Observer<Weather> observer;
     private long exitTime = 0; ////记录第一次点击的时间
 
-    //声明AMapLocationClient类对象
+    /**
+     * The M location client.
+     */
+//声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
+    /**
+     * The M location option.
+     */
     public AMapLocationClientOption mLocationOption = null;
 
     //private boolean isLoaction = false;
@@ -292,6 +300,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     /**
      * 从本地获取
+     *
+     * @param observer the observer
      */
     public void fetchDataByCache(final Observer<Weather> observer) {
 
@@ -320,6 +330,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     /**
      * 从网络获取
+     *
+     * @param observer the observer
      */
     public void fetchDataByNetWork(Observer<Weather> observer) {
         String cityName = mSetting.getString(Setting.CITY_NAME, "北京");

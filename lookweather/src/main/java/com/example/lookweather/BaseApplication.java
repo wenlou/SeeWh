@@ -9,7 +9,13 @@ import com.tencent.bugly.crashreport.CrashReport;
  * Created by sxj52 on 2016/4/29.
  */
 public class BaseApplication extends Application {
+    /**
+     * The constant cacheDir.
+     */
     public static String cacheDir = "";
+    /**
+     * The constant mAppContext.
+     */
     public static Context mAppContext = null;
 
 

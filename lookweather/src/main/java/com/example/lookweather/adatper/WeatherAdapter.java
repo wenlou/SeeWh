@@ -38,6 +38,12 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     private Weather mWeatherData;
     private Setting mSetting;
 
+    /**
+     * Instantiates a new Weather adapter.
+     *
+     * @param context     the context
+     * @param weatherData the weather data
+     */
     public WeatherAdapter(Context context, Weather weatherData) {
         mContext = context;
         this.mWeatherData = weatherData;
@@ -208,7 +214,6 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     }
 
 
-
     /**
      * 当前天气情况
      */
@@ -222,6 +227,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView tempPm;
         private TextView tempQuality;
 
+        /**
+         * Instantiates a new Now weather view holder.
+         *
+         * @param itemView the item view
+         */
         public NowWeatherViewHolder(View itemView) {
             super(itemView);
             cardView = (CardView) itemView.findViewById(R.id.cardView);
@@ -245,6 +255,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView[] mHumidity = new TextView[mWeatherData.hourlyForecast.size()];
         private TextView[] mWind = new TextView[mWeatherData.hourlyForecast.size()];
 
+        /**
+         * Instantiates a new Hours weather view holder.
+         *
+         * @param itemView the item view
+         */
         public HoursWeatherViewHolder(View itemView) {
             super(itemView);
             itemHourInfoLinearlayout = (LinearLayout) itemView.findViewById(R.id.item_hour_info_linearlayout);
@@ -274,6 +289,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView fluBrief;
         private TextView fluTxt;
 
+        /**
+         * Instantiates a new Suggestion view holder.
+         *
+         * @param itemView the item view
+         */
         public SuggestionViewHolder(View itemView) {
             super(itemView);
 
@@ -299,6 +319,11 @@ public class WeatherAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
         private TextView[] forecastTxt = new TextView[mWeatherData.dailyForecast.size()];
         private ImageView[] forecastIcon = new ImageView[mWeatherData.dailyForecast.size()];
 
+        /**
+         * Instantiates a new Forecast view holder.
+         *
+         * @param itemView the item view
+         */
         public ForecastViewHolder(View itemView) {
             super(itemView);
             forecastLinear = (LinearLayout) itemView.findViewById(R.id.forecast_linear);

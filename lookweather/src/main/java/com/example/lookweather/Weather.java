@@ -84,6 +84,9 @@ public class Weather implements  Serializable{
 
     @SerializedName("hourly_forecast") public List<HourlyForecastEntity> hourlyForecast;
 
+    /**
+     * The type Aqi entity.
+     */
     public static class AqiEntity implements Serializable {
         /**
          * aqi : 99
@@ -98,23 +101,68 @@ public class Weather implements  Serializable{
 
         @SerializedName("city") public CityEntity city;
 
+        /**
+         * The type City entity.
+         */
         public static class CityEntity implements Serializable {
+            /**
+             * The Aqi.
+             */
             @SerializedName("aqi") public String aqi;
+            /**
+             * The Co.
+             */
             @SerializedName("co") public String co;
+            /**
+             * The No 2.
+             */
             @SerializedName("no2") public String no2;
+            /**
+             * The O 3.
+             */
             @SerializedName("o3") public String o3;
+            /**
+             * The Pm 10.
+             */
             @SerializedName("pm10") public String pm10;
+            /**
+             * The Pm 25.
+             */
             @SerializedName("pm25") public String pm25;
+            /**
+             * The Qlty.
+             */
             @SerializedName("qlty") public String qlty;
+            /**
+             * The So 2.
+             */
             @SerializedName("so2") public String so2;
         }
     }
 
+    /**
+     * The type Basic entity.
+     */
     public static class BasicEntity implements Serializable {
+        /**
+         * The City.
+         */
         @SerializedName("city") public String city;
+        /**
+         * The Cnty.
+         */
         @SerializedName("cnty") public String cnty;
+        /**
+         * The Id.
+         */
         @SerializedName("id") public String id;
+        /**
+         * The Lat.
+         */
         @SerializedName("lat") public String lat;
+        /**
+         * The Lon.
+         */
         @SerializedName("lon") public String lon;
         /**
          * loc : 2016-02-18 21:04
@@ -123,12 +171,24 @@ public class Weather implements  Serializable{
 
         @SerializedName("update") public UpdateEntity update;
 
+        /**
+         * The type Update entity.
+         */
         public static class UpdateEntity implements Serializable {
+            /**
+             * The Loc.
+             */
             @SerializedName("loc") public String loc;
+            /**
+             * The Utc.
+             */
             @SerializedName("utc") public String utc;
         }
     }
 
+    /**
+     * The type Now entity.
+     */
     public static class NowEntity implements Serializable {
         /**
          * code : 101
@@ -136,11 +196,29 @@ public class Weather implements  Serializable{
          */
 
         @SerializedName("cond") public CondEntity cond;
+        /**
+         * The Fl.
+         */
         @SerializedName("fl") public String fl;
+        /**
+         * The Hum.
+         */
         @SerializedName("hum") public String hum;
+        /**
+         * The Pcpn.
+         */
         @SerializedName("pcpn") public String pcpn;
+        /**
+         * The Pres.
+         */
         @SerializedName("pres") public String pres;
+        /**
+         * The Tmp.
+         */
         @SerializedName("tmp") public String tmp;
+        /**
+         * The Vis.
+         */
         @SerializedName("vis") public String vis;
         /**
          * deg : 20
@@ -151,19 +229,46 @@ public class Weather implements  Serializable{
 
         @SerializedName("wind") public WindEntity wind;
 
+        /**
+         * The type Cond entity.
+         */
         public static class CondEntity implements Serializable {
+            /**
+             * The Code.
+             */
             @SerializedName("code") public String code;
+            /**
+             * The Txt.
+             */
             @SerializedName("txt") public String txt;
         }
 
+        /**
+         * The type Wind entity.
+         */
         public static class WindEntity implements Serializable {
+            /**
+             * The Deg.
+             */
             @SerializedName("deg") public String deg;
+            /**
+             * The Dir.
+             */
             @SerializedName("dir") public String dir;
+            /**
+             * The Sc.
+             */
             @SerializedName("sc") public String sc;
+            /**
+             * The Spd.
+             */
             @SerializedName("spd") public String spd;
         }
     }
 
+    /**
+     * The type Suggestion entity.
+     */
     public static class SuggestionEntity implements Serializable {
         /**
          * brf : 较舒适
@@ -208,42 +313,108 @@ public class Weather implements  Serializable{
 
         @SerializedName("uv") public UvEntity uv;
 
+        /**
+         * The type Comf entity.
+         */
         public static class ComfEntity implements Serializable {
+            /**
+             * The Brf.
+             */
             @SerializedName("brf") public String brf;
+            /**
+             * The Txt.
+             */
             @SerializedName("txt") public String txt;
         }
 
+        /**
+         * The type Cw entity.
+         */
         public static class CwEntity implements Serializable {
+            /**
+             * The Brf.
+             */
             @SerializedName("brf") public String brf;
+            /**
+             * The Txt.
+             */
             @SerializedName("txt") public String txt;
         }
 
+        /**
+         * The type Drsg entity.
+         */
         public static class DrsgEntity implements Serializable {
+            /**
+             * The Brf.
+             */
             @SerializedName("brf") public String brf;
+            /**
+             * The Txt.
+             */
             @SerializedName("txt") public String txt;
         }
 
+        /**
+         * The type Flu entity.
+         */
         public static class FluEntity implements Serializable {
+            /**
+             * The Brf.
+             */
             @SerializedName("brf") public String brf;
+            /**
+             * The Txt.
+             */
             @SerializedName("txt") public String txt;
         }
 
+        /**
+         * The type Sport entity.
+         */
         public static class SportEntity implements Serializable {
+            /**
+             * The Brf.
+             */
             @SerializedName("brf") public String brf;
+            /**
+             * The Txt.
+             */
             @SerializedName("txt") public String txt;
         }
 
+        /**
+         * The type Trav entity.
+         */
         public static class TravEntity implements Serializable {
+            /**
+             * The Brf.
+             */
             @SerializedName("brf") public String brf;
+            /**
+             * The Txt.
+             */
             @SerializedName("txt") public String txt;
         }
 
+        /**
+         * The type Uv entity.
+         */
         public static class UvEntity implements Serializable {
+            /**
+             * The Brf.
+             */
             @SerializedName("brf") public String brf;
+            /**
+             * The Txt.
+             */
             @SerializedName("txt") public String txt;
         }
     }
 
+    /**
+     * The type Daily forecast entity.
+     */
     public static class DailyForecastEntity implements Serializable {
         /**
          * sr : 07:30
@@ -259,10 +430,25 @@ public class Weather implements  Serializable{
          */
 
         @SerializedName("cond") public CondEntity cond;
+        /**
+         * The Date.
+         */
         @SerializedName("date") public String date;
+        /**
+         * The Hum.
+         */
         @SerializedName("hum") public String hum;
+        /**
+         * The Pcpn.
+         */
         @SerializedName("pcpn") public String pcpn;
+        /**
+         * The Pop.
+         */
         @SerializedName("pop") public String pop;
+        /**
+         * The Pres.
+         */
         @SerializedName("pres") public String pres;
         /**
          * max : 19
@@ -270,6 +456,9 @@ public class Weather implements  Serializable{
          */
 
         @SerializedName("tmp") public TmpEntity tmp;
+        /**
+         * The Vis.
+         */
         @SerializedName("vis") public String vis;
         /**
          * deg : 54
@@ -280,36 +469,102 @@ public class Weather implements  Serializable{
 
         @SerializedName("wind") public WindEntity wind;
 
+        /**
+         * The type Astro entity.
+         */
         public static class AstroEntity implements Serializable {
+            /**
+             * The Sr.
+             */
             @SerializedName("sr") public String sr;
+            /**
+             * The Ss.
+             */
             @SerializedName("ss") public String ss;
         }
 
+        /**
+         * The type Cond entity.
+         */
         public static class CondEntity implements Serializable {
+            /**
+             * The Code d.
+             */
             @SerializedName("code_d") public String codeD;
+            /**
+             * The Code n.
+             */
             @SerializedName("code_n") public String codeN;
+            /**
+             * The Txt d.
+             */
             @SerializedName("txt_d") public String txtD;
+            /**
+             * The Txt n.
+             */
             @SerializedName("txt_n") public String txtN;
         }
 
+        /**
+         * The type Tmp entity.
+         */
         public static class TmpEntity implements Serializable {
+            /**
+             * The Max.
+             */
             @SerializedName("max") public String max;
+            /**
+             * The Min.
+             */
             @SerializedName("min") public String min;
         }
 
+        /**
+         * The type Wind entity.
+         */
         public static class WindEntity implements Serializable {
+            /**
+             * The Deg.
+             */
             @SerializedName("deg") public String deg;
+            /**
+             * The Dir.
+             */
             @SerializedName("dir") public String dir;
+            /**
+             * The Sc.
+             */
             @SerializedName("sc") public String sc;
+            /**
+             * The Spd.
+             */
             @SerializedName("spd") public String spd;
         }
     }
 
+    /**
+     * The type Hourly forecast entity.
+     */
     public static class HourlyForecastEntity implements Serializable {
+        /**
+         * The Date.
+         */
         @SerializedName("date") public String date;
+        /**
+         * The Hum.
+         */
         @SerializedName("hum") public String hum;
+        /**
+         * The Pop.
+         */
         @SerializedName("pop") public String pop;
+        /**
+         * The Pres.
+         */
         @SerializedName("pres") public String pres;
+        /**
+         * The Tmp.
+         */
         @SerializedName("tmp") public String tmp;
         /**
          * deg : 13
@@ -320,10 +575,25 @@ public class Weather implements  Serializable{
 
         @SerializedName("wind") public WindEntity wind;
 
+        /**
+         * The type Wind entity.
+         */
         public static class WindEntity implements Serializable {
+            /**
+             * The Deg.
+             */
             @SerializedName("deg") public String deg;
+            /**
+             * The Dir.
+             */
             @SerializedName("dir") public String dir;
+            /**
+             * The Sc.
+             */
             @SerializedName("sc") public String sc;
+            /**
+             * The Spd.
+             */
             @SerializedName("spd") public String spd;
         }
     }

@@ -48,10 +48,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 /**
+ * The type A cache.
+ *
  * @author Michael Yang（www.yangfuhai.com） update at 2013.08.07
  */
 public class ACache {
+    /**
+     * The constant TIME_HOUR.
+     */
     public static final int TIME_HOUR = 60 * 60;
+    /**
+     * The constant TIME_DAY.
+     */
     public static final int TIME_DAY = TIME_HOUR * 24;
     private static final int MAX_SIZE = 1000 * 1000 * 50; // 50 mb
     private static final int MAX_COUNT = Integer.MAX_VALUE; // 不限制存放数据的数量
@@ -59,28 +67,63 @@ public class ACache {
     private ACacheManager mCache;
 
 
+    /**
+     * Get a cache.
+     *
+     * @param ctx the ctx
+     * @return the a cache
+     */
     public static ACache get(Context ctx) {
         return get(ctx, "Data");
     }
 
 
+    /**
+     * Get a cache.
+     *
+     * @param ctx       the ctx
+     * @param cacheName the cache name
+     * @return the a cache
+     */
     public static ACache get(Context ctx, String cacheName) {
         File f = new File(BaseApplication.cacheDir, cacheName);
         return get(f, MAX_SIZE, MAX_COUNT);
     }
 
 
+    /**
+     * Get a cache.
+     *
+     * @param cacheDir the cache dir
+     * @return the a cache
+     */
     public static ACache get(File cacheDir) {
         return get(cacheDir, MAX_SIZE, MAX_COUNT);
     }
 
 
+    /**
+     * Get a cache.
+     *
+     * @param ctx       the ctx
+     * @param max_zise  the max zise
+     * @param max_count the max count
+     * @return the a cache
+     */
     public static ACache get(Context ctx, long max_zise, int max_count) {
         File f = new File(BaseApplication.cacheDir, "Data");
         return get(f, max_zise, max_count);
     }
 
 
+    /**
+     * Get a cache.
+     *
+     * @param cacheDir  the cache dir
+     * @param max_zise  the max zise
+     * @param max_count the max count
+     * @return the a cache
+     */
     public static ACache get(File cacheDir, long max_zise, int max_count) {
         ACache manager = mInstanceMap.get(cacheDir.getAbsoluteFile() + myPid());
         if (manager == null) {
@@ -111,7 +154,7 @@ public class ACache {
     /**
      * 保存 String数据 到 缓存中
      *
-     * @param key 保存的key
+     * @param key   保存的key
      * @param value 保存的String数据
      */
     public void put(String key, String value) {
@@ -139,8 +182,8 @@ public class ACache {
     /**
      * 保存 String数据 到 缓存中
      *
-     * @param key 保存的key
-     * @param value 保存的String数据
+     * @param key      保存的key
+     * @param value    保存的String数据
      * @param saveTime 保存的时间，单位：秒
      */
     public void put(String key, String value, int saveTime) {
@@ -151,6 +194,7 @@ public class ACache {
     /**
      * 读取 String数据
      *
+     * @param key the key
      * @return String 数据
      */
     public String getAsString(String key) {
@@ -194,7 +238,8 @@ public class ACache {
 
     /**
      * 保存 JSONObject数据 到 缓存中
-     *  @param key 保存的key
+     *
+     * @param key   保存的key
      * @param value 保存的JSON数据
      */
     public void put(String key, JSONObject value) {
@@ -205,8 +250,8 @@ public class ACache {
     /**
      * 保存 JSONObject数据 到 缓存中
      *
-     * @param key 保存的key
-     * @param value 保存的JSONObject数据
+     * @param key      保存的key
+     * @param value    保存的JSONObject数据
      * @param saveTime 保存的时间，单位：秒
      */
     public void put(String key, JSONObject value, int saveTime) {
@@ -217,7 +262,8 @@ public class ACache {
     /**
      * 读取JSONObject数据
      *
-     * @return JSONObject数据
+     * @param key the key
+     * @return JSONObject数据 as json object
      */
     public JSONObject getAsJSONObject(String key) {
         String JSONString = getAsString(key);
@@ -238,7 +284,7 @@ public class ACache {
     /**
      * 保存 JSONArray数据 到 缓存中
      *
-     * @param key 保存的key
+     * @param key   保存的key
      * @param value 保存的JSONArray数据
      */
     public void put(String key, JSONArray value) {
@@ -249,8 +295,8 @@ public class ACache {
     /**
      * 保存 JSONArray数据 到 缓存中
      *
-     * @param key 保存的key
-     * @param value 保存的JSONArray数据
+     * @param key      保存的key
+     * @param value    保存的JSONArray数据
      * @param saveTime 保存的时间，单位：秒
      */
     public void put(String key, JSONArray value, int saveTime) {
@@ -261,7 +307,8 @@ public class ACache {
     /**
      * 读取JSONArray数据
      *
-     * @return JSONArray数据
+     * @param key the key
+     * @return JSONArray数据 as json array
      */
     public JSONArray getAsJSONArray(String key) {
         String JSONString = getAsString(key);
@@ -282,7 +329,7 @@ public class ACache {
     /**
      * 保存 byte数据 到 缓存中
      *
-     * @param key 保存的key
+     * @param key   保存的key
      * @param value 保存的数据
      */
     public void put(String key, byte[] value) {
@@ -310,8 +357,8 @@ public class ACache {
     /**
      * 保存 byte数据 到 缓存中
      *
-     * @param key 保存的key
-     * @param value 保存的数据
+     * @param key      保存的key
+     * @param value    保存的数据
      * @param saveTime 保存的时间，单位：秒
      */
     public void put(String key, byte[] value, int saveTime) {
@@ -322,6 +369,7 @@ public class ACache {
     /**
      * 获取 byte 数据
      *
+     * @param key the key
      * @return byte 数据
      */
     public byte[] getAsBinary(String key) {
@@ -363,7 +411,7 @@ public class ACache {
     /**
      * 保存 Serializable数据 到 缓存中
      *
-     * @param key 保存的key
+     * @param key   保存的key
      * @param value 保存的value
      */
     public void put(String key, Serializable value) {
@@ -374,8 +422,8 @@ public class ACache {
     /**
      * 保存 Serializable数据到 缓存中
      *
-     * @param key 保存的key
-     * @param value 保存的value
+     * @param key      保存的key
+     * @param value    保存的value
      * @param saveTime 保存的时间，单位：秒
      */
     public void put(String key, Serializable value, int saveTime) {
@@ -406,6 +454,7 @@ public class ACache {
     /**
      * 读取 Serializable数据
      *
+     * @param key the key
      * @return Serializable 数据
      */
     public Object getAsObject(String key) {
@@ -445,7 +494,7 @@ public class ACache {
     /**
      * 保存 bitmap 到 缓存中
      *
-     * @param key 保存的key
+     * @param key   保存的key
      * @param value 保存的bitmap数据
      */
     public void put(String key, Bitmap value) {
@@ -456,8 +505,8 @@ public class ACache {
     /**
      * 保存 bitmap 到 缓存中
      *
-     * @param key 保存的key
-     * @param value 保存的 bitmap 数据
+     * @param key      保存的key
+     * @param value    保存的 bitmap 数据
      * @param saveTime 保存的时间，单位：秒
      */
     public void put(String key, Bitmap value, int saveTime) {
@@ -468,6 +517,7 @@ public class ACache {
     /**
      * 读取 bitmap 数据
      *
+     * @param key the key
      * @return bitmap 数据
      */
     public Bitmap getAsBitmap(String key) {
@@ -485,7 +535,7 @@ public class ACache {
     /**
      * 保存 drawable 到 缓存中
      *
-     * @param key 保存的key
+     * @param key   保存的key
      * @param value 保存的drawable数据
      */
     public void put(String key, Drawable value) {
@@ -496,8 +546,8 @@ public class ACache {
     /**
      * 保存 drawable 到 缓存中
      *
-     * @param key 保存的key
-     * @param value 保存的 drawable 数据
+     * @param key      保存的key
+     * @param value    保存的 drawable 数据
      * @param saveTime 保存的时间，单位：秒
      */
     public void put(String key, Drawable value, int saveTime) {
@@ -508,6 +558,7 @@ public class ACache {
     /**
      * 读取 Drawable 数据
      *
+     * @param key the key
      * @return Drawable 数据
      */
     public Drawable getAsDrawable(String key) {
@@ -521,6 +572,7 @@ public class ACache {
     /**
      * 获取缓存文件
      *
+     * @param key the key
      * @return value 缓存的文件
      */
     public File file(String key) {
@@ -533,7 +585,8 @@ public class ACache {
     /**
      * 移除某个key
      *
-     * @return 是否移除成功
+     * @param key the key
+     * @return 是否移除成功 boolean
      */
     public boolean remove(String key) {
         return mCache.remove(key);
@@ -549,7 +602,9 @@ public class ACache {
 
 
     /**
-     * @author 杨福海（michael） www.yangfuhai.com
+     * The type A cache manager.
+     *
+     * @author 杨福海 （michael） www.yangfuhai.com
      * @version 1.0
      * @title 缓存管理器
      */
@@ -559,6 +614,9 @@ public class ACache {
         private final long sizeLimit;
         private final int countLimit;
         private final Map<File, Long> lastUsageDates = Collections.synchronizedMap(new HashMap<File, Long>());
+        /**
+         * The Cache dir.
+         */
         protected File cacheDir;
 
 

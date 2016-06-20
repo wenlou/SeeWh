@@ -31,12 +31,16 @@ public class RetrofitSingleton {
 
     private static final String TAG = RetrofitSingleton.class.getSimpleName();
 
+    /**
+     * The constant context.
+     */
     public static Context context;
 
     /**
      * 初始化
+     *
+     * @param context the context
      */
-
     public static void init(final Context context) {
 
         Executor executor = Executors.newCachedThreadPool();
@@ -63,24 +67,49 @@ public class RetrofitSingleton {
         apiService = retrofit.create(APiInterface.class);
     }
 
+    /**
+     * Gets api service.
+     *
+     * @param context the context
+     * @return the api service
+     */
     public static APiInterface getApiService(Context context) {
         if (apiService != null) return apiService;
         init(context);
         return getApiService(context);
     }
 
+    /**
+     * Gets retrofit.
+     *
+     * @param context the context
+     * @return the retrofit
+     */
     public static Retrofit getRetrofit(Context context) {
         if (retrofit != null) return retrofit;
         init(context);
         return getRetrofit(context);
     }
 
+    /**
+     * Gets ok http client.
+     *
+     * @param context the context
+     * @return the ok http client
+     */
     public static OkHttpClient getOkHttpClient(Context context) {
         if (okHttpClient != null) return okHttpClient;
         init(context);
         return getOkHttpClient(context);
     }
 
+    /**
+     * Dispose failure info.
+     *
+     * @param t       the t
+     * @param context the context
+     * @param view    the view
+     */
     public static void disposeFailureInfo(Throwable t, Context context, View view) {
         if (t.toString().contains("GaiException") || t.toString().contains("SocketTimeoutException") ||
                 t.toString().contains("UnknownHostException")) {

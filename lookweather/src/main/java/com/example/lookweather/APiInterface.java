@@ -8,8 +8,18 @@ import rx.Observable;
  * Created by sxj52 on 2016/4/29.
  */
 public interface APiInterface {
+    /**
+     * The constant HOST.
+     */
     String HOST = "https://api.heweather.com/x3/";
 
+    /**
+     * M weather api observable.
+     *
+     * @param city the city
+     * @param key  the key
+     * @return the observable
+     */
     @GET("weather")
     Observable<WeatherAPI> mWeatherAPI(@Query("city") String city, @Query("key") String key);
 

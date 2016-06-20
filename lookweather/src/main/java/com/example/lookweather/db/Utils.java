@@ -14,10 +14,22 @@ public class Utils {
     private static int screenWidth = 0;
     private static int screenHeight = 0;
 
+    /**
+     * Dp to px int.
+     *
+     * @param dp the dp
+     * @return the int
+     */
     public static int dpToPx(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
     }
 
+    /**
+     * Gets screen height.
+     *
+     * @param c the c
+     * @return the screen height
+     */
     public static int getScreenHeight(Context c) {
         if (screenHeight == 0) {
             WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
@@ -30,6 +42,12 @@ public class Utils {
         return screenHeight;
     }
 
+    /**
+     * Gets screen width.
+     *
+     * @param c the c
+     * @return the screen width
+     */
     public static int getScreenWidth(Context c) {
         if (screenWidth == 0) {
             WindowManager wm = (WindowManager) c.getSystemService(Context.WINDOW_SERVICE);
@@ -42,6 +60,11 @@ public class Utils {
         return screenWidth;
     }
 
+    /**
+     * Is android 5 boolean.
+     *
+     * @return the boolean
+     */
     public static boolean isAndroid5() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }

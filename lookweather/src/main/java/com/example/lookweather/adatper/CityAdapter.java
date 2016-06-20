@@ -21,6 +21,12 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     private OnRecyclerViewItemClickListener mOnItemClickListener = null;
 
 
+    /**
+     * Instantiates a new City adapter.
+     *
+     * @param context  the context
+     * @param dataList the data list
+     */
     public CityAdapter(Context context, ArrayList<String> dataList) {
         mContext = context;
         this.dataList = dataList;
@@ -47,20 +53,42 @@ public class CityAdapter extends RecyclerView.Adapter<CityAdapter.CityViewHolder
     }
 
 
+    /**
+     * Sets on item click listener.
+     *
+     * @param listener the listener
+     */
     public void setOnItemClickListener(OnRecyclerViewItemClickListener listener) {
         this.mOnItemClickListener = listener;
     }
 
 
+    /**
+     * The interface On recycler view item click listener.
+     */
     public interface OnRecyclerViewItemClickListener {
+        /**
+         * On item click.
+         *
+         * @param view the view
+         * @param pos  the pos
+         */
         void onItemClick(View view, int pos);
     }
 
+    /**
+     * The type City view holder.
+     */
     class CityViewHolder extends RecyclerView.ViewHolder {
         private TextView itemCity;
         private CardView cardView;
 
 
+        /**
+         * Instantiates a new City view holder.
+         *
+         * @param itemView the item view
+         */
         public CityViewHolder(View itemView) {
             super(itemView);
             itemCity = (TextView) itemView.findViewById(R.id.item_city);

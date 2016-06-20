@@ -18,10 +18,21 @@ public class WeatherDB {
 
     private Context context;
 
+    /**
+     * Instantiates a new Weather db.
+     *
+     * @param context the context
+     */
     public WeatherDB(Context context) {
         this.context = context;
     }
 
+    /**
+     * Load provinces list.
+     *
+     * @param db the db
+     * @return the list
+     */
     public List<com.example.lookweather.Province> loadProvinces(SQLiteDatabase db) {
 
         List<Province> list = new ArrayList<>();
@@ -41,6 +52,13 @@ public class WeatherDB {
         return list;
     }
 
+    /**
+     * Load cities list.
+     *
+     * @param db    the db
+     * @param ProID the pro id
+     * @return the list
+     */
     public List<com.example.lookweather.City> loadCities(SQLiteDatabase db, int ProID) {
         List<City> list = new ArrayList<>();
         Cursor cursor = db.query("T_City", null, "ProID = ?", new String[] { String.valueOf(ProID) }, null, null, null);

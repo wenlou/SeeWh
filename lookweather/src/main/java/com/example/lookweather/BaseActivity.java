@@ -15,7 +15,13 @@ import com.readystatesoftware.systembartint.SystemBarTintManager;
  * Created by sxj52 on 2016/4/28.
  */
 public class BaseActivity extends AppCompatActivity{
+    /**
+     * The M setting.
+     */
     public Setting mSetting = null;
+    /**
+     * The A cache.
+     */
     public ACache aCache;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,9 +42,12 @@ public class BaseActivity extends AppCompatActivity{
                     WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
+
     /**
      * 设置状态栏颜色
      * 也就是所谓沉浸式状态栏
+     *
+     * @param color the color
      */
     public void setStatusBarColor(int color) {
         /**
@@ -53,6 +62,11 @@ public class BaseActivity extends AppCompatActivity{
     }
 
 
+    /**
+     * Sets status bar color for kitkat.
+     *
+     * @param color the color
+     */
     public void setStatusBarColorForKitkat(int color) {
         /**
          * Android4.4
@@ -65,9 +79,23 @@ public class BaseActivity extends AppCompatActivity{
         }
     }
 
+    /**
+     * Show snackbar.
+     *
+     * @param view the view
+     * @param s    the s
+     */
     public void showSnackbar(View view, String s){
         Snackbar.make(view,s,Snackbar.LENGTH_SHORT).show();
     }
+
+    /**
+     * Show snackbar.
+     *
+     * @param view the view
+     * @param s    the s
+     * @param ture the ture
+     */
     public void showSnackbar(View view,String s,boolean ture){
         Snackbar.make(view,s,Snackbar.LENGTH_LONG).show();
     }

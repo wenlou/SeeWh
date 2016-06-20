@@ -7,7 +7,13 @@ import java.io.Serializable;
  */
 public class Province implements Serializable{
 
+    /**
+     * The Pro name.
+     */
     public String ProName;
+    /**
+     * The Pro sort.
+     */
     public int ProSort;
 
 

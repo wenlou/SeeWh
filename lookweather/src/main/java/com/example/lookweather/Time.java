@@ -5,11 +5,15 @@ import android.annotation.SuppressLint;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * The type Time.
+ */
 public class Time {
 
 	/**
 	 * yyyy-MM-dd HH:mm:ss
-	 * @return
+	 *
+	 * @return string
 	 */
 	@SuppressLint("SimpleDateFormat")
 	public static String getNowYMDHMSTime(){
@@ -20,9 +24,11 @@ public class Time {
 		String date = mDateFormat.format(new Date());
 		return date;
 	}
+
 	/**
 	 * MM-dd HH:mm:ss
-	 * @return
+	 *
+	 * @return string
 	 */
 	@SuppressLint("SimpleDateFormat")
 	public static String getNowMDHMSTime(){
@@ -32,9 +38,11 @@ public class Time {
 		String date = mDateFormat.format(new Date());
 		return date;
 	}
+
 	/**
 	 * MM-dd
-	 * @return
+	 *
+	 * @return string
 	 */
 	@SuppressLint("SimpleDateFormat")
 	public static String getNowYMD(){
@@ -47,8 +55,9 @@ public class Time {
 
 	/**
 	 * yyyy-MM-dd
-	 * @param date
-	 * @return
+	 *
+	 * @param date the date
+	 * @return string
 	 */
 	@SuppressLint("SimpleDateFormat")
 	public static String getYMD(Date date){

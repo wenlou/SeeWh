@@ -7,7 +7,16 @@ import java.io.Serializable;
  */
 public class City implements Serializable {
 
+    /**
+     * The City name.
+     */
     public String CityName;
+    /**
+     * The Pro id.
+     */
     public int ProID;
+    /**
+     * The City sort.
+     */
     public int CitySort;
 }
