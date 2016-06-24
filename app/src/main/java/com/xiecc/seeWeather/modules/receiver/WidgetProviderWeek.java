@@ -38,7 +38,6 @@ public class WidgetProviderWeek extends AppWidgetProvider {
         long ONE_HOUR_TIME = 1000 * 60 * 60;
         String hourSave = sharedPreferences.getString(context.getString(R.string.key_widget_time),
                 context.getString(R.string.widget_time_default));
-        Log.e("7",hourSave);
         switch (hourSave) {
             case "1hour":
                 hour = 1;
@@ -58,41 +57,18 @@ public class WidgetProviderWeek extends AppWidgetProvider {
         }
         alarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
                 SystemClock.elapsedRealtime(), hour * ONE_HOUR_TIME, pendingIntent);
-        Log.e("5","------xx");
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-//        final String action = intent.getAction();
-//        switch (action) {
-//            case "com.geometricweather.receiver.REFRESH_WIDGET":
-//                // update
-//                Intent intentRefresh = new Intent(context, UpdataAppwidgetService.class);
-//                Log.e("5","------");
-//                context.startService(intentRefresh);
-//
-//                break;
-//        }
         Intent intentRefresh = new Intent(context, UpdataAppwidgetService.class);
-                Log.e("5","------");
                 context.startService(intentRefresh);
-    }
-    @Override
-    public void onEnabled(Context context) {
-        // TODO Auto-generated method stub
-        Intent intent=new Intent(context,UpdataAppwidgetService.class);
-        context.startService(intent);
-        super.onEnabled(context);
-
     }
 
     @Override
     public void onDisabled(Context context) {
-        // TODO Auto-generated method stub
-        Intent intent=new Intent(context,UpdataAppwidgetService.class);
-        context.stopService(intent);
-        super.onDisabled(context);
-
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        alarmManager.cancel(pendingIntent);
     }
 }
