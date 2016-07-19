@@ -417,7 +417,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             .subscribe(observer);
     }
 
-    private void showFabDialog() {
+    private void                                                    showFabDialog() {
         materialDialog=new MaterialDialog(this);
         materialDialog.setTitle("喜欢").setMessage("这只是个喜欢按钮，并没有什么卵用୧(๑•̀⌄•́๑)૭✧")
                 .setPositiveButton("退下", new View.OnClickListener() {

@@ -1,1 +1,1 @@
-include ':app', ':lookweather'
+include ':app', ':lookweather', ':firstactivty'
