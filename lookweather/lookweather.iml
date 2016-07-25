@@ -111,7 +111,7 @@
     <orderEntry type="library" exported="" name="okio-1.6.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp3-integration-1.4.0" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-animators-2.2.3" level="project" />
-    <orderEntry type="library" exported="" name="crashreport-2.1.7" level="project" />
+    <orderEntry type="library" exported="" name="crashreport-2.1.9" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-23.3.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-23.3.0" level="project" />
     <orderEntry type="library" exported="" name="systembartint-1.0.3" level="project" />
@@ -124,8 +124,8 @@
     <orderEntry type="library" exported="" name="retrofit-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="adapter-rxjava-2.0.2" level="project" />
     <orderEntry type="library" exported="" name="rxandroid-1.1.0" level="project" />
-    <orderEntry type="library" exported="" name="rxjava-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="converter-gson-2.0.2" level="project" />
+    <orderEntry type="library" exported="" name="rxjava-1.1.1" level="project" />
     <orderEntry type="library" exported="" name="design-23.3.0" level="project" />
     <orderEntry type="library" exported="" name="AMap_Location_v2.3.0_20160112" level="project" />
     <orderEntry type="library" exported="" name="cardview-v7-23.3.0" level="project" />

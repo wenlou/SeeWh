@@ -376,6 +376,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
 
         if (weather != null) {
+            //distinct()去除重复
             Observable.just(weather).distinct().subscribe(observer);
         } else {
             erroNetSnackbar(observer);
