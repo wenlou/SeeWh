@@ -4,6 +4,7 @@ package com.example.firstactivty;
 /* 天气情况类
         */
 public class Weather{
+
     /**
      * 城市
      */
@@ -28,6 +29,11 @@ public class Weather{
      * 天气状况
      */
     String status;
+
+    public static Weather objectFromData(String str) {
+
+        return new com.google.gson.Gson().fromJson(str, Weather.class);
+    }
 
     @Override
     public String toString() {

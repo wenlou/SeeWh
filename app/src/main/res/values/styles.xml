@@ -16,7 +16,7 @@
     <style name="FirstTheme" parent="Theme.AppCompat">
 
         <item name="android:windowNoTitle">true</item>
-        <item name="android:windowBackground">@mipmap/first_backpng</item>
+
 
     </style>
 
