@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.xiecc.seeWeather.R;
+import com.xiecc.seeWeather.base.BaseApplication;
 import com.xiecc.seeWeather.component.GanHuo;
 import com.xiecc.seeWeather.component.GankRetrofit;
 import com.xiecc.seeWeather.component.GankService;
@@ -40,9 +41,42 @@ public class FirstActivity extends Activity {
     }
 
     private void init() {
+//        Observable.just("Hello Wrold").subscribe(new Action1<String>() {
+//            @Override
+//            public void call(String s) {
+//                    System.out.println(s);
+//            }
+//        });
+//        Observable.just("hello").map(new Func1<String, String>() {
+//            @Override
+//            public String call(String s) {
+//                return s+"--Dan";
+//            }
+//        }).subscribe(new Action1<String>() {
+//            @Override
+//            public void call(String s) {
+//                System.out.println(s);
+//            }
+//        });
+//        Observable.just("fff").subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<String>() {
+//            @Override
+//            public void onCompleted() {
+//
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//
+//            }
+//
+//            @Override
+//            public void onNext(String s) {
+//                System.out.println(s+"1");
+//            }
+//        });
         image = (ImageView) findViewById(R.id.welcome_image);
 
-        GankRetrofit.getRetrofit(getApplicationContext())
+        GankRetrofit.getRetrofit()
                 .create(GankService.class)
                 .getGanHuo("福利",1,1)
                 .subscribeOn(Schedulers.io())
@@ -65,6 +99,7 @@ public class FirstActivity extends Activity {
 
                     @Override
                     public void onNext(GanHuo ganHuo) {
+                        BaseApplication.currentGirl=ganHuo.getResults().get(0).getUrl();
                         Log.e("666","onNext");
                         Glide.with(FirstActivity.this)
                                 .load(ganHuo.getResults().get(0).getUrl())
@@ -105,5 +140,11 @@ public class FirstActivity extends Activity {
 
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        init();
     }
 }

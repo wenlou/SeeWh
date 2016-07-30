@@ -52,14 +52,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recyclerview"
+        <com.jude.easyrecyclerview.EasyRecyclerView
+            android:id="@+id/recycler_view"
+            app:scrollbarStyle="insideOverlay"
+            app:layout_progress="@layout/progress_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <include
-            layout="@layout/progressbar"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent">
+        </com.jude.easyrecyclerview.EasyRecyclerView>
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

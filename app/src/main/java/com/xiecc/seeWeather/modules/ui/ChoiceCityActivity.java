@@ -2,20 +2,22 @@ package com.xiecc.seeWeather.modules.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
+import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.modules.adatper.CityAdapter;
 import com.xiecc.seeWeather.modules.db.DBManager;
 import com.xiecc.seeWeather.modules.db.WeatherDB;
@@ -26,7 +28,6 @@ import com.xiecc.seeWeather.modules.ui.setting.Setting;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -35,22 +36,20 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hugo on 2016/2/19 0019.
  */
-public class ChoiceCityActivity extends BaseActivity {
+public class ChoiceCityActivity extends BaseActivity
+        {
     private static String TAG = ChoiceCityActivity.class.getSimpleName();
-
-    private RecyclerView mRecyclerView;
-    private ProgressBar mProgressBar;
     private DBManager mDBManager;
     private WeatherDB mWeatherDB;
     private CollapsingToolbarLayout collapsingToolbarLayout;
-
-    private ArrayList<String> dataList = new ArrayList<>();
     private Province selectedProvince;
     private City selectedCity;
+    private ArrayList<String> dataList = new ArrayList<>();
     private List<Province> provincesList;
     private List<City> cityList;
     private CityAdapter mAdapter;
-
+     private EasyRecyclerView recyclerView;
+    private Handler handler = new Handler();
     public static final int LEVEL_PROVINCE = 1;
     public static final int LEVEL_CITY = 2;
     private int currentLevel;
@@ -96,39 +95,43 @@ public class ChoiceCityActivity extends BaseActivity {
             Glide.with(this).load(R.mipmap.city_night).diskCacheStrategy(DiskCacheStrategy.ALL).into(bannner);
             setStatusBarColorForKitkat(R.color.colorSunset);
         }
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        if (mProgressBar != null) {
-            mProgressBar.setVisibility(View.VISIBLE);
-        }
+
     }
 
 
     private void initRecyclerView() {
-        mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setItemAnimator(new FadeInUpAnimator());
-        mAdapter = new CityAdapter(this, dataList);
-        mRecyclerView.setAdapter(mAdapter);
+        recyclerView = (EasyRecyclerView) findViewById(R.id.recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+        mAdapter = new CityAdapter(getApplicationContext());
+        dealhAdapter(mAdapter);
+        recyclerView.setRefreshing(false);
 
-        mAdapter.setOnItemClickListener((view, pos) -> {
-            if (currentLevel == LEVEL_PROVINCE) {
-                selectedProvince = provincesList.get(pos);
-                mRecyclerView.scrollTo(0, 0);
-                queryCities();
-            }
-            else if (currentLevel == LEVEL_CITY) {
-                selectedCity = cityList.get(pos);
-                Intent intent = new Intent();
-                String cityName = selectedCity.CityName;
-                //传送数据
-                intent.putExtra(Setting.CITY_NAME, cityName);
-                setResult(2, intent);
-                finish();
+
+
+    }
+
+    private void dealhAdapter(final RecyclerArrayAdapter<String> cityAdapter) {
+        recyclerView.setAdapterWithProgress(cityAdapter);
+        cityAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener(){
+            @Override
+            public void onItemClick(int position) {
+
+                if (currentLevel == LEVEL_PROVINCE) {
+                    selectedProvince = provincesList.get(position);
+                    recyclerView.scrollTo(0, 0);
+                    queryCities();
+                } else if (currentLevel == LEVEL_CITY) {
+                    selectedCity = cityList.get(position);
+                    Intent intent = new Intent();
+                    String cityName = selectedCity.CityName;
+                    //传送数据
+                    intent.putExtra(Setting.CITY_NAME, cityName);
+                    setResult(2, intent);
+                    finish();
+                }
             }
         });
     }
-
 
     /**
      * 查询全国所有的省，从数据库查询
@@ -138,9 +141,8 @@ public class ChoiceCityActivity extends BaseActivity {
         Observer<Province> observer = new Observer<Province>() {
             @Override public void onCompleted() {
                 currentLevel = LEVEL_PROVINCE;
-                mAdapter.notifyDataSetChanged();
-                mProgressBar.setVisibility(View.GONE);
-                //PLog.i(TAG,"省份");
+                PLog.i(TAG,"省份");
+                mAdapter.addAll(dataList);
             }
 
 
@@ -150,18 +152,15 @@ public class ChoiceCityActivity extends BaseActivity {
 
 
             @Override public void onNext(Province province) {
-                //在这里做 RV 的动画效果 使用 Item 的更新
+
                 dataList.add(province.ProName);
-                //PLog.i(TAG,province.ProSort+"");
-                //mAdapter.notifyItemInserted(province.ProSort-1);
+
 
             }
         };
 
         Observable.defer(() -> {
             provincesList = mWeatherDB.loadProvinces(mDBManager.getDatabase());
-            dataList.clear();
-            mAdapter.notifyDataSetChanged();
             return Observable.from(provincesList);
         }).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
 
@@ -175,32 +174,35 @@ public class ChoiceCityActivity extends BaseActivity {
      */
     private void queryCities() {
         dataList.clear();
-        mAdapter.notifyDataSetChanged();
         collapsingToolbarLayout.setTitle(selectedProvince.ProName);
+        PLog.i(TAG,"6666"+selectedProvince.ProSort);
         Observer<City> observer = new Observer<City>() {
             @Override public void onCompleted() {
                 currentLevel = LEVEL_CITY;
-                mAdapter.notifyDataSetChanged();
                 //定位到第一个item
-                mRecyclerView.smoothScrollToPosition(0);
-                //PLog.i(TAG,"城市");
+                recyclerView.scrollToPosition(0);
+                mAdapter.clear();
+
+                mAdapter.addAll(dataList);
             }
 
 
             @Override public void onError(Throwable e) {
 
+                PLog.i(TAG,e.toString());
             }
 
 
             @Override public void onNext(City city) {
+
                 dataList.add(city.CityName);
-                //mAdapter.notifyItemInserted(city.CitySort);
             }
         };
 
 
         Observable.defer(() -> {
             cityList = mWeatherDB.loadCities(mDBManager.getDatabase(), selectedProvince.ProSort);
+            PLog.i(TAG,""+selectedProvince.ProSort);
             return Observable.from(cityList);
         }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -215,7 +217,6 @@ public class ChoiceCityActivity extends BaseActivity {
             }
             else {
                 queryProvinces();
-                mRecyclerView.smoothScrollToPosition(0);
             }
         }
         return false;
@@ -226,4 +227,6 @@ public class ChoiceCityActivity extends BaseActivity {
         super.onDestroy();
         mDBManager.closeDatabase();
     }
+
+
 }

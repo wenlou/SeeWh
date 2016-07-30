@@ -12,4 +12,8 @@
 
     <color name="colorTextLight">#fafafa</color>
     <color name="colorTextGrey">#9e9e9e</color>
+
+    <color name="white">#ffffff</color>
+    <color name="gray">#eeeeee</color>
+    <color name="black">#000000</color>
 </resources>

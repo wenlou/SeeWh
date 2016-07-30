@@ -23,7 +23,6 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +32,7 @@ import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 import android.widget.TextView;
@@ -46,6 +45,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
+import com.jude.easyrecyclerview.EasyRecyclerView;
+import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
 import com.tbruyelle.rxpermissions.RxPermissions;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
@@ -61,6 +62,7 @@ import com.xiecc.seeWeather.modules.ui.about.AboutActivity;
 import com.xiecc.seeWeather.modules.ui.setting.Setting;
 import com.xiecc.seeWeather.modules.ui.setting.SettingActivity;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import me.drakeet.materialdialog.MaterialDialog;
@@ -73,7 +75,7 @@ import rx.schedulers.Schedulers;
  * The type Main activity.
  */
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
-    AMapLocationListener {
+    AMapLocationListener ,SwipeRefreshLayout.OnRefreshListener{
     private AppWidgetManager awm;
 
    private MaterialDialog materialDialog;
@@ -85,17 +87,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private FloatingActionButton fab;
-    private SwipeRefreshLayout mRefreshLayout;
     private ImageView bannner;
-    private ProgressBar mProgressBar;
+    private LinearLayout noWIFILayout;
     private ImageView mErroImageView;
     private RelativeLayout headerBackground;
 
-    private RecyclerView mRecyclerView;
+    private EasyRecyclerView mRecyclerView;
     //private Weather mWeatherData = new Weather();
     private WeatherAdapter mAdapter;
     private Observer<Weather> observer;
     private long exitTime = 0; ////记录第一次点击的时间
+    private ArrayList<Weather> weatherList=new ArrayList<Weather>();
 
     //声明AMapLocationClient类对象
     public AMapLocationClient mLocationClient = null;
@@ -155,24 +157,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mErroImageView= (ImageView) findViewById(R.id.iv_erro);
         setSupportActionBar(toolbar);
         bannner = (ImageView) findViewById(R.id.bannner);
-        mProgressBar = (ProgressBar) findViewById(R.id.progressBar);
-        if (mProgressBar != null) {
-            mProgressBar.setVisibility(View.VISIBLE);
-        }
-        mErroImageView = (ImageView) findViewById(R.id.iv_erro);
-        // Glide 加载本地 GIF 图的方法
-        //GlideDrawableImageViewTarget imageViewTarget = new GlideDrawableImageViewTarget(mErroImageView);
-        //Glide.with(this).load(R.raw.loading).diskCacheStrategy(DiskCacheStrategy.ALL).into(imageViewTarget);
-
-        mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swiprefresh);
-        if (mRefreshLayout != null) {
-            mRefreshLayout.setOnRefreshListener(() -> {
-                mRefreshLayout.postDelayed(() -> fetchDataByNetWork(observer), 1000);
-            });
-        }
-
         //标题
         collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
         if (collapsingToolbarLayout != null) {
@@ -200,10 +187,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             final int fabBottomMargin = lp.bottomMargin;
 
             //recclerview
-            mRecyclerView = (RecyclerView) findViewById(R.id.recyclerview);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(MainActivity.this));
-            mRecyclerView.setHasFixedSize(true);
-            mRecyclerView.addOnScrollListener(new HidingScrollListener() {
+            mRecyclerView = (EasyRecyclerView) findViewById(R.id.recycler_view);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
+            mRecyclerView.setRefreshListener(this);
+            mRecyclerView.setHasTransientState(true);
+            //mRecyclerView.setHasFixedSize(true);
+            mRecyclerView.setOnScrollListener(new HidingScrollListener() {
                 @Override
                 public void onHide() {
                     fab.animate()
@@ -217,11 +206,17 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
                 }
             });
+
         }
 
         //mAdapter = new WeatherAdapter(MainActivity.this, mWeatherData);
         //mRecyclerView.setAdapter(mAdapter);
 
+    }
+
+    private void dealWithAdapter(final RecyclerArrayAdapter<Weather> adapter) {
+        mRecyclerView.setAdapterWithProgress(adapter);
+        //mAdapter.setOnItemClickListener(new);
     }
 
     /**
@@ -288,30 +283,43 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      */
     private void initDataObserver() {
         observer = new Observer<Weather>() {
+
             @Override
             public void onCompleted() {
-                mRefreshLayout.setRefreshing(false);
+               //mRecyclerView.setRefreshing(false);
+                 //mAdapter.addAll(weatherList);
+                weatherList.clear();
             }
 
             @Override
             public void onError(Throwable e) {
                 erroNetSnackbar(observer);
-                mRefreshLayout.setRefreshing(false);
+                //noWIFILayout.setVisibility(View.VISIBLE);
+                mRecyclerView.setRefreshing(false);
+                mErroImageView.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onNext(Weather weather) {
-                mProgressBar.setVisibility(View.GONE);
+                //mProgressBar.setVisibility(View.GONE);
                 mErroImageView.setVisibility(View.GONE);
                 mRecyclerView.setVisibility(View.VISIBLE);
 
                 collapsingToolbarLayout.setTitle(weather.basic.city);
-                mAdapter = new WeatherAdapter(MainActivity.this, weather);
-                mRecyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickLitener(new WeatherAdapter.OnItemClickLitener(){
+                //mAdapter = new WeatherAdapter(MainActivity.this);
+                mAdapter = new WeatherAdapter(MainActivity.this,weather);
+                dealWithAdapter(mAdapter);
+                weatherList.add(weather);
+                mAdapter.add(weather);
+                mAdapter.add(weather);
+                mAdapter.add(weather);
+                mAdapter.add(weather);
+                PLog.e("7777",weather.suggestion.comf.toString());
+                //mRecyclerView.setAdapter(mAdapter);
+                mAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
 
                     @Override
-                    public void onItemClick(View view, int position) {
+                    public void onItemClick(int position) {
                         LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         View dialogLayout = inflater.inflate(R.layout.weather_dialog, (ViewGroup) MainActivity.this.findViewById(
                                 R.id.weather_dialog_root));
@@ -332,7 +340,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                                 break;
                             default:
                                 break;
-                        }
+                    }
+
 
                         TextView city = (TextView) dialogLayout.findViewById(R.id.dialog_city);
                         city.setText(weather.basic.city);
@@ -384,7 +393,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
     private void erroNetSnackbar(final Observer<Weather> observer) {
-        mProgressBar.setVisibility(View.GONE);
         mErroImageView.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
         Snackbar.make(fab, "网络不好,~( ´•︵•` )~", Snackbar.LENGTH_INDEFINITE).setAction("重试", v -> {
@@ -416,9 +424,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     (mSetting.getAutoUpdate() * Setting.ONE_HOUR));//默认一小时后缓存失效
             })
             .subscribe(observer);
+
     }
 
-    private void                                                    showFabDialog() {
+    private void showFabDialog() {
         materialDialog=new MaterialDialog(this);
         materialDialog.setTitle("喜欢").setMessage("这只是个喜欢按钮，并没有什么卵用୧(๑•̀⌄•́๑)૭✧")
                 .setPositiveButton("退下", new View.OnClickListener() {
@@ -527,7 +536,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         super.onActivityResult(requestCode, resultCode, data);
         //requestCode标示请求的标示   resultCode表示有数据
         if (requestCode == 1 && resultCode == 2) {
-            mRefreshLayout.setRefreshing(true);
+           mRecyclerView.setRefreshing(true);
             mSetting.putString(Setting.CITY_NAME, data.getStringExtra(Setting.CITY_NAME));
             fetchDataByNetWork(observer);
         }
@@ -585,4 +594,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
+    @Override
+    public void onRefresh() {
+        mRecyclerView.postDelayed(() -> fetchDataByNetWork(observer), 1000);
+    }
 }
