@@ -13,14 +13,14 @@
         android:layout_centerInParent="true"
         android:layout_width="wrap_content"
         android:elevation="5dp"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         tools:targetApi="lollipop">
 
         <LinearLayout
             android:layout_alignParentTop="true"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="100dp"
             android:layout_centerInParent="true"
             android:padding="4dp"
             tools:ignore="DisableBaselineAlignment,UselessParent">

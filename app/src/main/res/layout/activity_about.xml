@@ -83,7 +83,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="8dp"
                     android:autoLink="web"
-                    android:text="weibo：http://weibo.com/u/2275107904"/>
+                    android:text="博客：http://imshen.top"/>
 
             </android.support.v7.widget.CardView>
 

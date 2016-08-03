@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.jude.easyrecyclerview.adapter.BaseViewHolder;
 import com.xiecc.seeWeather.R;
-import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.Util;
 import com.xiecc.seeWeather.modules.domain.Weather;
 import com.xiecc.seeWeather.modules.ui.setting.Setting;
@@ -55,7 +54,7 @@ public class ForecastViewHolder extends BaseViewHolder<Weather> {
                     forecastDate[i].setText(
                             Util.dayForWeek(mWeatherData.dailyForecast.get(i).date));
                 } catch (Exception e) {
-                    PLog.e("66666", e.toString());
+                    //PLog.e("66666", e.toString());
                 }
             }
             // 图片

@@ -21,7 +21,7 @@ public class Setting {
 
     //public static final String API_TOKEN = "7db041d0c3013b63e4bed2a554f02d85";//fir.im api_token
     public static final String KEY = "e2faff6b359440c288e7fb675df53d22";// 和风天气 key
-
+    public static final String MULTI_CHECK = "multi_check";
     public static int ONE_HOUR = 1000 * 60 * 60;
 
     private static Setting sInstance;

@@ -19,6 +19,7 @@ import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
 import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.modules.adatper.CityAdapter;
+import com.xiecc.seeWeather.modules.db.ChoiceCityDao;
 import com.xiecc.seeWeather.modules.db.DBManager;
 import com.xiecc.seeWeather.modules.db.WeatherDB;
 import com.xiecc.seeWeather.modules.domain.City;
@@ -49,6 +50,7 @@ public class ChoiceCityActivity extends BaseActivity
     private List<City> cityList;
     private CityAdapter mAdapter;
      private EasyRecyclerView recyclerView;
+            private ChoiceCityDao dao;
     private Handler handler = new Handler();
     public static final int LEVEL_PROVINCE = 1;
     public static final int LEVEL_CITY = 2;
@@ -68,14 +70,26 @@ public class ChoiceCityActivity extends BaseActivity
         mDBManager = new DBManager(this);
         mDBManager.openDatabase();
         mWeatherDB = new WeatherDB(this);
+        dao=new ChoiceCityDao(this);
+        //fillData();
         initView();
         initRecyclerView();
         queryProvinces();
 
     }
 
+            private void fillData() {
 
-    private void initView() {
+                ArrayList<String> dataList1 = dao.queryMode();
+                        for(String s:dataList1){
+                            PLog.e("8888",s);
+                        }
+
+
+            }
+
+
+            private void initView() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle("选择城市");
         //加入后退按键
@@ -124,8 +138,10 @@ public class ChoiceCityActivity extends BaseActivity
                     selectedCity = cityList.get(position);
                     Intent intent = new Intent();
                     String cityName = selectedCity.CityName;
+                    dao.add(selectedCity.CitySort,cityName);
                     //传送数据
                     intent.putExtra(Setting.CITY_NAME, cityName);
+                   // PLog.e("88888",cityName);
                     setResult(2, intent);
                     finish();
                 }
@@ -141,7 +157,7 @@ public class ChoiceCityActivity extends BaseActivity
         Observer<Province> observer = new Observer<Province>() {
             @Override public void onCompleted() {
                 currentLevel = LEVEL_PROVINCE;
-                PLog.i(TAG,"省份");
+                //PLog.i(TAG,"省份");
                 mAdapter.addAll(dataList);
             }
 
@@ -152,10 +168,7 @@ public class ChoiceCityActivity extends BaseActivity
 
 
             @Override public void onNext(Province province) {
-
                 dataList.add(province.ProName);
-
-
             }
         };
 
@@ -182,7 +195,7 @@ public class ChoiceCityActivity extends BaseActivity
                 //定位到第一个item
                 recyclerView.scrollToPosition(0);
                 mAdapter.clear();
-
+                fillData();
                 mAdapter.addAll(dataList);
             }
 
@@ -194,6 +207,7 @@ public class ChoiceCityActivity extends BaseActivity
 
 
             @Override public void onNext(City city) {
+
 
                 dataList.add(city.CityName);
             }

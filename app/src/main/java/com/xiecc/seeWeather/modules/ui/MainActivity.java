@@ -1,6 +1,5 @@
 package com.xiecc.seeWeather.modules.ui;
 
-import android.Manifest;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -8,77 +7,52 @@ import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
+import android.content.res.ColorStateList;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
-import android.widget.TextView;
 
-import com.amap.api.location.AMapLocation;
-import com.amap.api.location.AMapLocationClient;
-import com.amap.api.location.AMapLocationClientOption;
-import com.amap.api.location.AMapLocationListener;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.animation.GlideAnimation;
-import com.bumptech.glide.request.target.SimpleTarget;
-import com.jude.easyrecyclerview.EasyRecyclerView;
-import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
-import com.tbruyelle.rxpermissions.RxPermissions;
 import com.xiecc.seeWeather.R;
 import com.xiecc.seeWeather.base.BaseActivity;
+import com.xiecc.seeWeather.common.CircularAnimUtil;
 import com.xiecc.seeWeather.common.PLog;
 import com.xiecc.seeWeather.common.Util;
-import com.xiecc.seeWeather.component.RetrofitSingleton;
-import com.xiecc.seeWeather.modules.adatper.WeatherAdapter;
 import com.xiecc.seeWeather.modules.domain.Weather;
-import com.xiecc.seeWeather.modules.listener.HidingScrollListener;
 import com.xiecc.seeWeather.modules.receiver.WidgetProviderWeek;
 import com.xiecc.seeWeather.modules.service.AutoUpdateService;
 import com.xiecc.seeWeather.modules.ui.about.AboutActivity;
+import com.xiecc.seeWeather.modules.ui.setting.CityFrgment;
 import com.xiecc.seeWeather.modules.ui.setting.Setting;
 import com.xiecc.seeWeather.modules.ui.setting.SettingActivity;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
-import me.drakeet.materialdialog.MaterialDialog;
-import rx.Observable;
-import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import java.util.List;
 
 /**
  * The type Main activity.
  */
-public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener,
-    AMapLocationListener ,SwipeRefreshLayout.OnRefreshListener{
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener
+    {
     private AppWidgetManager awm;
-
-   private MaterialDialog materialDialog;
 
     private final String TAG = MainActivity.class.getSimpleName();
 
@@ -87,21 +61,20 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private Toolbar toolbar;
     private DrawerLayout drawer;
     private FloatingActionButton fab;
-    private ImageView bannner;
+    //private ImageView bannner;
     private LinearLayout noWIFILayout;
     private ImageView mErroImageView;
     private RelativeLayout headerBackground;
+        private TabLayout tabLayout;
+        private ViewPager viewPager;
+        private List<Fragment> fragments;
+        private String[] titles = {"主界面","多城市"};
 
-    private EasyRecyclerView mRecyclerView;
-    //private Weather mWeatherData = new Weather();
-    private WeatherAdapter mAdapter;
-    private Observer<Weather> observer;
+
     private long exitTime = 0; ////记录第一次点击的时间
-    private ArrayList<Weather> weatherList=new ArrayList<Weather>();
 
-    //声明AMapLocationClient类对象
-    public AMapLocationClient mLocationClient = null;
-    public AMapLocationClientOption mLocationOption = null;
+
+
 
     //private boolean isLoaction = false;
 
@@ -113,32 +86,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         //ButterKnife.bind(this);
         initView();
         initDrawer();
-
-        initDataObserver();
+        initIcon();
         startService(new Intent(this, AutoUpdateService.class));
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //为了实现 Intent 重启使图标生效
-        initIcon();
-        if (Util.isNetworkConnected(this)) {
-            //CheckVersion.checkVersion(this, fab);
-            // https://github.com/tbruyelle/RxPermissions
-            RxPermissions.getInstance(this).request(Manifest.permission.ACCESS_COARSE_LOCATION)
-                .subscribe(granted -> {
-                    if (granted) {
-                        location();
-                    } else {
-                        fetchDataByCache(observer);
-                    }
-                });
-            //fetchData();
-        } else {
-            fetchDataByCache(observer);
-        }
-    }
+
 
     @Override
     protected void onPause() {
@@ -152,19 +104,63 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         PLog.i(TAG,"onStop");
     }
 
-    /**
+    @Override
+    protected void onStart() {
+        initIcon();
+        super.onStart();
+
+    }
+        @Override
+        protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+            super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == 1 && resultCode == 2) {
+                mSetting.putString(Setting.CITY_NAME, data.getStringExtra(Setting.CITY_NAME));
+                toolbar.setTitle(mSetting.getCityName());
+               // PLog.e("7777",Setting.CITY_NAME);
+            }
+        }
+
+        @Override
+        protected void onRestart() {
+            super.onRestart();
+            initIcon();
+
+        }
+
+        /**
      * 初始化基础View
      */
     private void initView() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mErroImageView= (ImageView) findViewById(R.id.iv_erro);
+        fragments=new ArrayList<>() ;
+        fragments.add(MainFragment.getInstance(titles[0]));
+        fragments.add(CityFrgment.getInstance(titles[1]));
+        viewPager= (ViewPager) findViewById(R.id.view_pager);
+        viewPager.setOffscreenPageLimit(2);
+        viewPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
+            @Override
+            public CharSequence getPageTitle(int position) {
+                return titles[position];
+            }
+
+            @Override
+            public int getCount() {
+                return fragments.size();
+            }
+
+            @Override
+            public Fragment getItem(int position) {
+                return fragments.get(position);
+            }
+        });
+
+        //TabLayout
+        tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
+        tabLayout.setupWithViewPager(viewPager);
+        toolbar.setTitle(mSetting.getCityName());
         setSupportActionBar(toolbar);
-        bannner = (ImageView) findViewById(R.id.bannner);
-        //标题
-        collapsingToolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
-        if (collapsingToolbarLayout != null) {
-            collapsingToolbarLayout.setTitle(" ");
-        }
 
         //彩蛋-夜间模式
         Calendar calendar = Calendar.getInstance();
@@ -174,49 +170,51 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         setStatusBarColorForKitkat(R.color.colorSunrise);
         if (mSetting.getCurrentHour() < 6 || mSetting.getCurrentHour() > 18) {
-            Glide.with(this).load(R.mipmap.sunset).diskCacheStrategy(DiskCacheStrategy.ALL).into(bannner);
-            collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
+           // Glide.with(this).load(R.mipmap.sunset).diskCacheStrategy(DiskCacheStrategy.ALL).into(bannner);
+           // collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
             setStatusBarColorForKitkat(R.color.colorSunset);
         }
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-        //fab
-        fab = (FloatingActionButton) findViewById(R.id.fab);
-        if (fab != null) {
-            fab.setOnClickListener(v -> showFabDialog());
-            CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) fab.getLayoutParams();
-            final int fabBottomMargin = lp.bottomMargin;
+            }
 
-            //recclerview
-            mRecyclerView = (EasyRecyclerView) findViewById(R.id.recycler_view);
-            mRecyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-            mRecyclerView.setRefreshListener(this);
-            mRecyclerView.setHasTransientState(true);
-            //mRecyclerView.setHasFixedSize(true);
-            mRecyclerView.setOnScrollListener(new HidingScrollListener() {
-                @Override
-                public void onHide() {
-                    fab.animate()
-                        .translationY(fab.getHeight() + fabBottomMargin)
-                        .setInterpolator(new AccelerateInterpolator(2))
-                        .start();
+            @Override
+            public void onPageSelected(int position) {
+                if (position == 1) {
+                    fab.setImageResource(R.drawable.ic_add_24dp);
+                    fab.setBackgroundTintList(
+                            ColorStateList.valueOf(ContextCompat.getColor(MainActivity.this, R.color.colorPrimary)));
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = new Intent(MainActivity.this, ChoiceCityActivity.class);
+                            intent.putExtra(mSetting.MULTI_CHECK, true);
+                            CircularAnimUtil.startActivity(MainActivity.this, intent, fab,
+                                    R.color.colorPrimary);
+                        }
+                    });
+                } else {
+                    fab.setImageResource(R.drawable.ic_favorite_24dp);
+                    fab.setBackgroundTintList(
+                            ColorStateList.valueOf(ContextCompat.getColor(MainActivity.this, R.color.colorAccent)));
+                    fab.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            showFabDialog();
+                        }
+                    });
                 }
+            }
 
-                @Override
-                public void onShow() {
-                    fab.animate().translationY(0).setInterpolator(new DecelerateInterpolator(2)).start();
-                }
-            });
+            @Override
+            public void onPageScrollStateChanged(int state) {
 
-        }
+            }
+        });
 
-        //mAdapter = new WeatherAdapter(MainActivity.this, mWeatherData);
-        //mRecyclerView.setAdapter(mAdapter);
 
-    }
-
-    private void dealWithAdapter(final RecyclerArrayAdapter<Weather> adapter) {
-        mRecyclerView.setAdapterWithProgress(adapter);
-        //mAdapter.setOnItemClickListener(new);
     }
 
     /**
@@ -236,7 +234,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-            drawer.setDrawerListener(toggle);
+            drawer.addDrawerListener(toggle);
             toggle.syncState();
         }
     }
@@ -277,166 +275,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    /**
-     * 初始化 observer (观察者)
-     * 拿到数据后的操作
-     */
-    private void initDataObserver() {
-        observer = new Observer<Weather>() {
-
-            @Override
-            public void onCompleted() {
-               //mRecyclerView.setRefreshing(false);
-                 //mAdapter.addAll(weatherList);
-                weatherList.clear();
-            }
-
-            @Override
-            public void onError(Throwable e) {
-                erroNetSnackbar(observer);
-                //noWIFILayout.setVisibility(View.VISIBLE);
-                mRecyclerView.setRefreshing(false);
-                mErroImageView.setVisibility(View.VISIBLE);
-            }
-
-            @Override
-            public void onNext(Weather weather) {
-                //mProgressBar.setVisibility(View.GONE);
-                mErroImageView.setVisibility(View.GONE);
-                mRecyclerView.setVisibility(View.VISIBLE);
-
-                collapsingToolbarLayout.setTitle(weather.basic.city);
-                //mAdapter = new WeatherAdapter(MainActivity.this);
-                mAdapter = new WeatherAdapter(MainActivity.this,weather);
-                dealWithAdapter(mAdapter);
-                weatherList.add(weather);
-                mAdapter.add(weather);
-                mAdapter.add(weather);
-                mAdapter.add(weather);
-                mAdapter.add(weather);
-                PLog.e("7777",weather.suggestion.comf.toString());
-                //mRecyclerView.setAdapter(mAdapter);
-                mAdapter.setOnItemClickListener(new RecyclerArrayAdapter.OnItemClickListener() {
-
-                    @Override
-                    public void onItemClick(int position) {
-                        LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                        View dialogLayout = inflater.inflate(R.layout.weather_dialog, (ViewGroup) MainActivity.this.findViewById(
-                                R.id.weather_dialog_root));
-                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this)
-                                .setView(dialogLayout);
-                        final AlertDialog alertDialog = builder.create();
-
-                        RelativeLayout root = (RelativeLayout) dialogLayout.findViewById(R.id.weather_dialog_root);
-                        switch (Util.getWeatherType(Integer.parseInt(weather.now.cond.code))) {
-                            case "晴":
-                                root.setBackgroundResource(R.mipmap.dialog_bg_sunny);
-                                break;
-                            case "阴":
-                                root.setBackgroundResource(R.mipmap.dialog_bg_cloudy);
-                                break;
-                            case "雨":
-                                root.setBackgroundResource(R.mipmap.dialog_bg_rainy);
-                                break;
-                            default:
-                                break;
-                    }
-
-
-                        TextView city = (TextView) dialogLayout.findViewById(R.id.dialog_city);
-                        city.setText(weather.basic.city);
-                        TextView temp = (TextView) dialogLayout.findViewById(R.id.dialog_temp);
-                        temp.setText(String.format("%s°", weather.now.tmp));
-                        ImageView icon = (ImageView) dialogLayout.findViewById(R.id.dialog_icon);
-
-                        Glide.with(MainActivity.this)
-                                .load(mSetting.getInt(weather.now.cond.txt, R.mipmap.none))
-                                .asBitmap()
-                                .into(new SimpleTarget<Bitmap>() {
-                                    @Override
-                                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                                        icon.setImageBitmap(resource);
-                                        icon.setColorFilter(Color.WHITE);
-                                    }
-                                });
-
-                        alertDialog.show();
-                    }
-                } );
-                normalStyleNotification(weather);
-                startUpdataService(weather);
-                showSnackbar(fab, "加载完毕，✺◟(∗❛ัᴗ❛ั∗)◞✺,");
-            }
-        };
-        //fetchDataByCache(observer);
-        //fetchDataByNetWork(observer);
-    }
-
-    /**
-     * 从本地获取
-     */
-    public void fetchDataByCache(final Observer<Weather> observer) {
-
-        Weather weather = null;
-        try {
-            weather = (Weather) aCache.getAsObject("WeatherData");
-        } catch (Exception e) {
-            Log.e(TAG, e.toString());
-        }
-
-        if (weather != null) {
-            //distinct()去除重复
-            Observable.just(weather).distinct().subscribe(observer);
-        } else {
-            erroNetSnackbar(observer);
-        }
-    }
-
-    private void erroNetSnackbar(final Observer<Weather> observer) {
-        mErroImageView.setVisibility(View.VISIBLE);
-        mRecyclerView.setVisibility(View.GONE);
-        Snackbar.make(fab, "网络不好,~( ´•︵•` )~", Snackbar.LENGTH_INDEFINITE).setAction("重试", v -> {
-            fetchDataByNetWork(observer);
-        }).show();
-    }
-
-    /**
-     * 从网络获取
-     */
-    public void fetchDataByNetWork(Observer<Weather> observer) {
-        String cityName = mSetting.getString(Setting.CITY_NAME, "济南");
-        if (cityName != null) {
-            cityName = cityName.replace("市", "")
-                .replace("省", "")
-                .replace("自治区", "")
-                .replace("特别行政区", "")
-                .replace("地区", "")
-                .replace("盟", "");
-        }
-        RetrofitSingleton.getApiService(this)
-            .mWeatherAPI(cityName, Setting.KEY)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .filter(weatherAPI -> weatherAPI.mHeWeatherDataService30s.get(0).status.equals("ok"))
-            .map(weatherAPI -> weatherAPI.mHeWeatherDataService30s.get(0))
-            .doOnNext(weather -> {
-                aCache.put("WeatherData", weather,
-                    (mSetting.getAutoUpdate() * Setting.ONE_HOUR));//默认一小时后缓存失效
-            })
-            .subscribe(observer);
-
-    }
 
     private void showFabDialog() {
-        materialDialog=new MaterialDialog(this);
-        materialDialog.setTitle("喜欢").setMessage("这只是个喜欢按钮，并没有什么卵用୧(๑•̀⌄•́๑)૭✧")
-                .setPositiveButton("退下", new View.OnClickListener() {
-                            @Override public void onClick(View v) {
-                                materialDialog.dismiss();
-
-                            }})
+        new AlertDialog.Builder(MainActivity.this).setTitle("点赞")
+                .setMessage("去项目地址给作者个Star，鼓励下作者୧(๑•̀⌄•́๑)૭✧")
+                .setPositiveButton("好叻", (dialog, which) -> {
+                    Uri uri = Uri.parse(getString(R.string.app_html));   //指定网址
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);           //指定Action
+                    intent.setData(uri);                            //设置Uri
+                    MainActivity.this.startActivity(intent);        //启动Activity
+                })
                 .show();
-
     }
 
     /**
@@ -483,66 +333,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }
     }
 
-    /**
-     * 高德定位
-     */
-    private void location() {
-        //初始化定位
-        mLocationClient = new AMapLocationClient(getApplicationContext());
-        //设置定位回调监听
-        mLocationClient.setLocationListener(this);
-        mLocationOption = new AMapLocationClientOption();
-        //设置定位模式为高精度模式，Battery_Saving为低功耗模式，Device_Sensors是仅设备模式
-        mLocationOption.setLocationMode(AMapLocationClientOption.AMapLocationMode.Battery_Saving);
-        //设置是否返回地址信息（默认返回地址信息）
-        mLocationOption.setNeedAddress(true);
-        //设置是否只定位一次,默认为false
-        mLocationOption.setOnceLocation(false);
-        //设置是否强制刷新WIFI，默认为强制刷新
-        mLocationOption.setWifiActiveScan(true);
-        //设置是否允许模拟位置,默认为false，不允许模拟位置
-        mLocationOption.setMockEnable(false);
-        //设置定位间隔 单位毫秒
-        mLocationOption.setInterval(mSetting.getAutoUpdate() * Setting.ONE_HOUR);
-        //给定位客户端对象设置定位参数
-        mLocationClient.setLocationOption(mLocationOption);
-        //启动定位
-        mLocationClient.startLocation();
-    }
 
-    @Override
-    public void onLocationChanged(AMapLocation aMapLocation) {
-        if (aMapLocation != null) {
-            if (aMapLocation.getErrorCode() == 0) {
-                //定位成功回调信息，设置相关消息
-                aMapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
-                mSetting.setCityName(aMapLocation.getCity());
-                PLog.i(TAG, aMapLocation.getProvince() + aMapLocation.getCity() + aMapLocation.getDistrict() +
-                    aMapLocation.getAdCode() + aMapLocation.getCityCode());
-            } else {
-                //显示错误信息ErrCode是错误码，errInfo是错误信息，详见错误码表。
-                PLog.e("AmapError", "location Error, ErrCode:" + aMapLocation.getErrorCode() + ", errInfo:" +
-                   aMapLocation.getErrorInfo());
-                //Snackbar.make(fab, "定位失败,请尝试手动更新", Snackbar.LENGTH_LONG).show();
-                showSnackbar(fab, "定位失败,加载默认城市", true);
-            }
-            fetchDataByNetWork(observer);
-        }
-    }
-
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //requestCode标示请求的标示   resultCode表示有数据
-        if (requestCode == 1 && resultCode == 2) {
-           mRecyclerView.setRefreshing(true);
-            mSetting.putString(Setting.CITY_NAME, data.getStringExtra(Setting.CITY_NAME));
-            fetchDataByNetWork(observer);
-        }
-    }
-
-    private void normalStyleNotification(Weather weather) {
+    public void normalStyleNotification(Weather weather) {
         Intent intent = new Intent(MainActivity.this, MainActivity.class);
         //intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         PendingIntent pendingIntent =
@@ -559,7 +351,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         // tag和id都是可以拿来区分不同的通知的
         manager.notify(1, notification);
     }
-    private void startUpdataService(Weather weather ) {
+    public void startUpdataService(Weather weather ) {
         awm= AppWidgetManager.getInstance(this);
                 // 激活主键--通讯
                 ComponentName provider=new ComponentName(MainActivity.this, WidgetProviderWeek.class);
@@ -594,8 +386,5 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     }
 
 
-    @Override
-    public void onRefresh() {
-        mRecyclerView.postDelayed(() -> fetchDataByNetWork(observer), 1000);
-    }
+
 }

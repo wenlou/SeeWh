@@ -9,7 +9,7 @@
     <string name="headerTxt">看看天气</string>
     <string name="title_activity_settings">Settings</string>
     <string name="api_error">出了点小问题，别担心，( •̀ .̫ •́ )✧</string>
-
+    <string name="app_html">https://github.com/wenlou/SeeWh</string>
 
     <string name="chage_icon">更换图标</string>
     <string-array name="icons">
