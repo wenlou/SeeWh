@@ -59,6 +59,11 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mActivity = (MainActivity) context;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mLocationClient.onDestroy();
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +98,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
         mRecyclerView.setHasTransientState(true);
         mRecyclerView.setRefreshListener(this);
         mRecyclerView.setItemAnimator(new SlideInLeftAnimator());
+
     }
 
     @Override

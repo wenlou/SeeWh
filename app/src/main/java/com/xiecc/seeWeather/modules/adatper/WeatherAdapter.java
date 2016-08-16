@@ -18,6 +18,9 @@ public class WeatherAdapter extends RecyclerArrayAdapter<Weather> {
     private final int TYPE_TWO = 1;
     private final int TYPE_THREE = 2;
     private final int TYPE_FORE = 3;
+    private boolean animateItems = false;
+    private int lastAnimatedPosition = -1;
+    private static final int ANIMATED_ITEMS_COUNT = 4;
 
     public WeatherAdapter(Context context, Weather weatherData) {
         super(context);
@@ -26,6 +29,13 @@ public class WeatherAdapter extends RecyclerArrayAdapter<Weather> {
         mSetting = Setting.getInstance();
 
     }
+    public WeatherAdapter(Context context) {
+        super(context);
+
+        mSetting = Setting.getInstance();
+
+    }
+
 
     @Override
     public int getCount() {

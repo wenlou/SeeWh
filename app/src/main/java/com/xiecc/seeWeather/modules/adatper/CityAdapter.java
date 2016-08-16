@@ -11,15 +11,16 @@ import com.jude.easyrecyclerview.adapter.RecyclerArrayAdapter;
  */
 public class CityAdapter extends RecyclerArrayAdapter<String>{
 
-
     public CityAdapter(Context context) {
         super(context);
     }
+
 
     @Override
     public BaseViewHolder OnCreateViewHolder(ViewGroup parent, int viewType) {
         return new CityViewHolder(parent);
     }
+
 
 
 }

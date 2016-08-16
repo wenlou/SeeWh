@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.ScaleAnimation;
@@ -28,10 +27,10 @@ import rx.schedulers.Schedulers;
  */
 public class FirstActivity extends Activity {
     private ImageView image;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //全屏显示
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -84,13 +83,11 @@ public class FirstActivity extends Activity {
                 .subscribe(new Observer<GanHuo>() {
                     @Override
                     public void onCompleted() {
-                        Log.e("666","onCompleted");
                         animateImage();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Log.e("666","onError");
                         Glide.with(FirstActivity.this)
                                 .load(R.mipmap.first_backpng)
                                 .into(image);
@@ -100,7 +97,6 @@ public class FirstActivity extends Activity {
                     @Override
                     public void onNext(GanHuo ganHuo) {
                         BaseApplication.currentGirl=ganHuo.getResults().get(0).getUrl();
-                        Log.e("666","onNext");
                         Glide.with(FirstActivity.this)
                                 .load(ganHuo.getResults().get(0).getUrl())
                                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
@@ -146,5 +142,10 @@ public class FirstActivity extends Activity {
     protected void onStart() {
         super.onStart();
         init();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
