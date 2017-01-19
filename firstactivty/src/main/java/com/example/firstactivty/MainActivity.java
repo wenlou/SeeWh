@@ -241,7 +241,6 @@ public class MainActivity extends AppCompatActivity implements View.OnTouchListe
             connection.setReadTimeout(5000);
             //连接
             connection.connect();
-
             //处理返回结果
             reader = new BufferedReader(new InputStreamReader(connection.getInputStream(), "utf-8"));
             StringBuffer buffer = new StringBuffer();

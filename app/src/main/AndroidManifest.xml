@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.xiecc.seeWeather">
+    package="com.sxj.SeeWeather">
 
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.READ_LOGS" />
 
     <application
-        android:name=".base.BaseApplication"
+        android:name="com.sxj.SeeWeather.base.BaseApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -35,10 +35,10 @@
             android:value="97b965dba4403dfeceee7f43c330e5d2" />
 
         <service android:name="com.amap.api.location.APSService" />
-        <service android:name=".modules.service.AutoUpdateService" />
+        <service android:name="com.sxj.SeeWeather.modules.service.AutoUpdateService" />
 
         <activity
-            android:name=".modules.ui.FirstActivity"
+            android:name="com.sxj.SeeWeather.modules.ui.FirstActivity"
             android:theme="@style/FirstTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

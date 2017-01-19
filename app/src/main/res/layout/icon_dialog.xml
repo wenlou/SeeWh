@@ -12,13 +12,26 @@
         android:layout_height="wrap_content"
         android:text="@string/chage_icon"
         android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/icon_parent"
+        android:layout_marginTop="24dp"
+        android:text="确定"
+        android:textColor="?colorPrimary"
+        />
+
     <LinearLayout
         android:layout_marginTop="24dp"
         android:id="@+id/icon_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:baselineAligned="false"
         android:layout_below="@+id/title"
-        android:baselineAligned="false">
+        android:layout_alignParentStart="true">
         <LinearLayout
             android:layout_marginEnd="24dp"
             android:id="@+id/layout_one"
@@ -65,15 +78,4 @@
                 android:text="图标二"/>
         </LinearLayout>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/icon_parent"
-        android:layout_marginTop="24dp"
-        android:text="确定"
-        android:textColor="?colorPrimary"
-        />
 </RelativeLayout>

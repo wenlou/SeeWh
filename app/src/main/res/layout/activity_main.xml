@@ -56,7 +56,7 @@
             app:layout_anchor="@id/main_content"
             app:layout_anchorGravity="end|bottom"
             android:src="@drawable/ic_favorite_24dp"
-            app:layout_behavior="com.xiecc.seeWeather.modules.listener.FloatingActionButtonScrollBehavior"/>
+            app:layout_behavior="com.sxj.SeeWeather.modules.listener.FloatingActionButtonScrollBehavior"/>
 
     </android.support.design.widget.CoordinatorLayout>
 
