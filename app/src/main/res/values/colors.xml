@@ -6,6 +6,7 @@
 
     <color name="colorSunrise">#0D4A6A</color>
     <color name="colorSunset">#201D45</color>
+    <color name="tran0">#00000000</color>
 
     <color name="colorCityDay">#5c8392</color>
 <color name="textHint">#8C8C8C</color>

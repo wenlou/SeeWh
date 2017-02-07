@@ -30,6 +30,8 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RemoteViews;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.sxj.SeeWeather.R;
 import com.sxj.SeeWeather.base.BaseActivity;
 import com.sxj.SeeWeather.common.CircularAnimUtil;
@@ -64,6 +66,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     //private ImageView bannner;
     private LinearLayout noWIFILayout;
     private ImageView mErroImageView;
+    private ImageView bannner;
     private RelativeLayout headerBackground;
         private TabLayout tabLayout;
         private ViewPager viewPager;
@@ -115,8 +118,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             super.onActivityResult(requestCode, resultCode, data);
             if (requestCode == 1 && resultCode == 2) {
                 mSetting.putString(Setting.CITY_NAME, data.getStringExtra(Setting.CITY_NAME));
-                toolbar.setTitle(mSetting.getCityName());
-               // PLog.e("7777",Setting.CITY_NAME);
+                //toolbar.setTitle(mSetting.getCityName());
+                collapsingToolbarLayout.setTitle(mSetting.getCityName());
+                PLog.e("7777",mSetting.getCityName());
             }
         }
 
@@ -131,6 +135,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * 初始化基础View
      */
     private void initView() {
+        collapsingToolbarLayout= (CollapsingToolbarLayout) findViewById(R.id.toolbar_layout);
+        bannner= (ImageView) findViewById(R.id.banner);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         mErroImageView= (ImageView) findViewById(R.id.iv_erro);
         fragments=new ArrayList<>() ;
@@ -170,8 +176,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         setStatusBarColorForKitkat(R.color.colorSunrise);
         if (mSetting.getCurrentHour() < 6 || mSetting.getCurrentHour() > 18) {
-           // Glide.with(this).load(R.mipmap.sunset).diskCacheStrategy(DiskCacheStrategy.ALL).into(bannner);
-           // collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
+             Glide.with(this).load(R.mipmap.sun_main).diskCacheStrategy(DiskCacheStrategy.ALL).into(bannner);
+//             collapsingToolbarLayout.setContentScrimColor(ContextCompat.getColor(this, R.color.colorSunset));
             setStatusBarColorForKitkat(R.color.colorSunset);
         }
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -258,6 +264,9 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mSetting.putInt("霾", R.mipmap.weather_haze);
             mSetting.putInt("雾", R.mipmap.weather_fog);
             mSetting.putInt("雨夹雪", R.mipmap.type_two_snowrain);
+            mSetting.putInt("小雪", R.mipmap.type_two_snowrain);
+            mSetting.putInt("中雪", R.mipmap.type_two_snowrain);
+            mSetting.putInt("大雪雪", R.mipmap.type_two_snowrain);
         } else {
             mSetting.putInt("未知", R.mipmap.none);
             mSetting.putInt("晴", R.mipmap.type_two_sunny);
@@ -273,6 +282,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             mSetting.putInt("霾", R.mipmap.type_two_haze);
             mSetting.putInt("雾", R.mipmap.type_two_fog);
             mSetting.putInt("雨夹雪", R.mipmap.type_two_snowrain);
+            mSetting.putInt("小雪", R.mipmap.type_two_snowrain);
+            mSetting.putInt("中雪", R.mipmap.type_two_snowrain);
+            mSetting.putInt("大雪", R.mipmap.type_two_snowrain);
+
         }
     }
 

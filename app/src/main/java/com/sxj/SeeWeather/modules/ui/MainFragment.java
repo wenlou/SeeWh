@@ -19,7 +19,6 @@ import com.amap.api.location.AMapLocationClient;
 import com.amap.api.location.AMapLocationClientOption;
 import com.amap.api.location.AMapLocationListener;
 import com.jude.easyrecyclerview.EasyRecyclerView;
-import com.tbruyelle.rxpermissions.RxPermissions;
 import com.sxj.SeeWeather.R;
 import com.sxj.SeeWeather.base.BaseApplication;
 import com.sxj.SeeWeather.common.PLog;
@@ -28,6 +27,7 @@ import com.sxj.SeeWeather.component.RetrofitSingleton;
 import com.sxj.SeeWeather.modules.adatper.WeatherAdapter;
 import com.sxj.SeeWeather.modules.domain.Weather;
 import com.sxj.SeeWeather.modules.ui.setting.Setting;
+import com.tbruyelle.rxpermissions.RxPermissions;
 
 import java.util.ArrayList;
 
@@ -85,9 +85,9 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_layout, container, false);
         initView(view);
-
         return view;
     }
+
 
     private void initView(View view) {
         //recclerview
