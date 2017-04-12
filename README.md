@@ -136,7 +136,38 @@
 ```
 
 
+### 截图
+
+![][image-2]
+![][image-3]
+
 
 ---- 
+#### 开源技术
+1. [Rxjava][2]
+2. [RxAndroid][3]
+3. [Retrofit][4]
+4. [GLide][5]
+5. [ASimpleCache][6]
 
+### LICENSE
+
+Copyright 2016 HugoXie  Licensed under the Apache License, Version 2.0 (the \"License\")
+
+you may not use this file except in compliance with the License. You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an \"AS IS\" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+
+图片来源于网络，版权属于原作者。
+
+
+
+[1]:	https://www.zhihu.com/question/26417244/answer/70193822
+[2]:	https://github.com/ReactiveX/RxJava
+[3]:	https://github.com/ReactiveX/RxAndroid
+[4]:	https://github.com/square/retrofit
+[5]:	https://github.com/bumptech/glide
+[6]:	https://github.com/yangfuhai/ASimpleCache
+[image-2]:	/images/day.png
+[image-3]:	/images/night.png
 
