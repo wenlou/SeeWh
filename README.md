@@ -1,6 +1,6 @@
 # 看看天气
 
----- 
+----
 ### 简介
 看看天气——是一款遵循**Material Design**风格的只看天气的APP。无流氓权限，无自启，xxx，用最少的权限做最优的体验。
 - 卡片展现（当前天气情况，未来几小时天气情况，生活建议，一周七天概况）
@@ -11,7 +11,10 @@
 - 彩蛋（自动夜间状态）
 
 
----- 
+---
+ [下载地址][7]
+
+----
 
 权限说明
 
@@ -36,8 +39,7 @@
 
 ```
 
-
----- 
+----
 
 ### 项目
 #### 公开 API
@@ -141,8 +143,7 @@
 ![][image-2]
 ![][image-3]
 
-
----- 
+----
 #### 开源技术
 1. [Rxjava][2]
 2. [RxAndroid][3]
@@ -160,6 +161,7 @@
 [4]:	https://github.com/square/retrofit
 [5]:	https://github.com/bumptech/glide
 [6]:	https://github.com/yangfuhai/ASimpleCache
+[7]:	http://shouji.baidu.com/software/10527000.html
 [image-2]:	/images/day.png
 [image-3]:	/images/night.png
 
