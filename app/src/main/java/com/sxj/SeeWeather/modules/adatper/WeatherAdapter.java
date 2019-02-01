@@ -39,7 +39,7 @@ public class WeatherAdapter extends RecyclerArrayAdapter<Weather> {
 
     @Override
     public int getCount() {
-        return 4;
+        return 3;
     }
 
 
@@ -55,9 +55,9 @@ public class WeatherAdapter extends RecyclerArrayAdapter<Weather> {
         if (position == TYPE_THREE) {
             return TYPE_THREE;
         }
-        if (position == TYPE_FORE) {
-            return TYPE_FORE;
-        }
+//        if (position == TYPE_FORE) {
+//            return TYPE_FORE;
+//        }
         return super.getViewType(position);
     }
 
@@ -66,13 +66,13 @@ public class WeatherAdapter extends RecyclerArrayAdapter<Weather> {
         if(viewType==TYPE_ONE){
             return new NowWeatherViewHolder(parent);
         }
-      if(viewType==TYPE_TWO){
-          return  new HoursWeatherViewHolder(parent,mWeatherData);
-      }
-        if(viewType==TYPE_THREE){
+//      if(viewType==TYPE_TWO){
+//          return  new HoursWeatherViewHolder(parent,mWeatherData);
+//      }
+        if(viewType==TYPE_TWO){
             return new SuggestionViewHolder(parent);
         }
-        if(viewType==TYPE_FORE){
+        if(viewType==TYPE_THREE){
             return  new ForecastViewHolder(parent,mWeatherData);
         }
         return null;

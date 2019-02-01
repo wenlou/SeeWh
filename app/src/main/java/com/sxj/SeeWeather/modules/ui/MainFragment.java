@@ -147,7 +147,7 @@ public class MainFragment extends Fragment implements SwipeRefreshLayout.OnRefre
                 mAdapter.add(weather);
                 mAdapter.add(weather);
                 mAdapter.add(weather);
-                mAdapter.add(weather);
+               // mAdapter.add(weather);
                 mActivity.normalStyleNotification(weather);
                 mActivity.startUpdataService(weather);
                 noWIFILayout.setVisibility(View.GONE);

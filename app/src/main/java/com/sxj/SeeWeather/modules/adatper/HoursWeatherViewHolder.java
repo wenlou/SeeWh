@@ -23,7 +23,7 @@ public class HoursWeatherViewHolder extends BaseViewHolder<Weather> {
     public HoursWeatherViewHolder(ViewGroup parent,Weather mWeatherData) {
         super(parent, R.layout.item_hour_info);
         this.mWeatherData=mWeatherData;
-         mClock = new TextView[mWeatherData.hourlyForecast.size()];
+        mClock = new TextView[mWeatherData.hourlyForecast.size()];
         mTemp = new TextView[mWeatherData.hourlyForecast.size()];
        mHumidity = new TextView[mWeatherData.hourlyForecast.size()];
         mWind = new TextView[mWeatherData.hourlyForecast.size()];

@@ -23,6 +23,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -378,22 +379,25 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 views.setTextViewText(R.id.widget_week_week_1,weather.basic.city);
                 try {
                     views.setTextViewText(R.id.widget_week_week_2, "明天");
+                    Log.i("hhhhhh",weather.dailyForecast.get(0).date);
+                    Log.i("hhhhhh",weather.dailyForecast.get(1).date);
+                    Log.i("hhhhhh",weather.dailyForecast.get(2).date);
                     views.setTextViewText(R.id.widget_week_week_3,Util.dayForWeek(weather.dailyForecast.get(2).date));
-                    views.setTextViewText(R.id.widget_week_week_4,Util.dayForWeek(weather.dailyForecast.get(3).date));
-                    views.setTextViewText(R.id.widget_week_week_5,Util.dayForWeek(weather.dailyForecast.get(4).date));
+                    //views.setTextViewText(R.id.widget_week_week_4,Util.dayForWeek(weather.dailyForecast.get(1).date));
+                    //views.setTextViewText(R.id.widget_week_week_5,Util.dayForWeek(weather.dailyForecast.get(2).date));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 views.setTextViewText(R.id.widget_week_temp_1,weather.dailyForecast.get(0).tmp.min+"°/"+weather.dailyForecast.get(0).tmp.max+ "°");
                 views.setTextViewText(R.id.widget_week_temp_2,weather.dailyForecast.get(1).tmp.min+"°/"+weather.dailyForecast.get(1).tmp.max+ "°");
                 views.setTextViewText(R.id.widget_week_temp_3,weather.dailyForecast.get(2).tmp.min+"°/"+weather.dailyForecast.get(2).tmp.max+ "°");
-                views.setTextViewText(R.id.widget_week_temp_4,weather.dailyForecast.get(3).tmp.min+"°/"+weather.dailyForecast.get(3).tmp.max+ "°");
-                views.setTextViewText(R.id.widget_week_temp_5,weather.dailyForecast.get(4).tmp.min+"°/"+weather.dailyForecast.get(4).tmp.max+ "°");
+                //views.setTextViewText(R.id.widget_week_temp_4,weather.dailyForecast.get(3).tmp.min+"°/"+weather.dailyForecast.get(3).tmp.max+ "°");
+                //views.setTextViewText(R.id.widget_week_temp_5,weather.dailyForecast.get(4).tmp.min+"°/"+weather.dailyForecast.get(4).tmp.max+ "°");
                 views.setImageViewResource(R.id.widget_week_image_1,mSetting.getInt(weather.now.cond.txt, R.mipmap.none));
                 views.setImageViewResource(R.id.widget_week_image_2,mSetting.getInt(weather.dailyForecast.get(1).cond.txtD, R.mipmap.none));
                 views.setImageViewResource(R.id.widget_week_image_3,mSetting.getInt(weather.dailyForecast.get(2).cond.txtD, R.mipmap.none));
-                views.setImageViewResource(R.id.widget_week_image_4,mSetting.getInt(weather.dailyForecast.get(3).cond.txtD, R.mipmap.none));
-                views.setImageViewResource(R.id.widget_week_image_5,mSetting.getInt(weather.dailyForecast.get(4).cond.txtD, R.mipmap.none));
+                //views.setImageViewResource(R.id.widget_week_image_4,mSetting.getInt(weather.dailyForecast.get(3).cond.txtD, R.mipmap.none));
+                //views.setImageViewResource(R.id.widget_week_image_5,mSetting.getInt(weather.dailyForecast.get(4).cond.txtD, R.mipmap.none));
                 awm.updateAppWidget(provider, views);
 
 

@@ -164,97 +164,9 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1" >
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical" >
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="17dp" >
 
-                        <TextView
-                            android:id="@+id/widget_week_week_4"
-                            style="@style/widget_week_week_text" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp" >
-
-                        <ImageView
-                            android:id="@+id/widget_week_image_4"
-                            style="@style/widget_week_icon"
-                            tools:ignore="ContentDescription" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="37dp" >
-
-                        <TextView
-                            android:id="@+id/widget_week_temp_4"
-                            style="@style/widget_week_temp_text" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_height="match_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical" >
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="17dp" >
-
-                        <TextView
-                            android:id="@+id/widget_week_week_5"
-                            style="@style/widget_week_week_text" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="38dp" >
-
-                        <ImageView
-                            android:id="@+id/widget_week_image_5"
-                            style="@style/widget_week_icon"
-                            tools:ignore="ContentDescription" />
-
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="37dp" >
-
-                        <TextView
-                            android:id="@+id/widget_week_temp_5"
-                            style="@style/widget_week_temp_text" />
-
-                    </RelativeLayout>
-
-                </LinearLayout>
-
-            </RelativeLayout>
 
         </LinearLayout>
 
