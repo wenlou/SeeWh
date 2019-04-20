@@ -26,7 +26,7 @@ public class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         aCache = ACache.get(BaseActivity.this);
         mSetting = Setting.getInstance();
-
+        System.out.print("11111");
         /**
          * http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/1122/3712.html
          * 在BaseActivity.java里：我们通过判断当前sdk_int大于4.4(kitkat),则通过代码的形式设置status bar为透明
